@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.devonulrich.genesisclient.login.LoginStore;
 import com.devonulrich.genesisclient.network.OverviewTask;
 
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+
 public class OverviewActivity extends Activity {
 
     @Override
@@ -36,6 +38,7 @@ public class OverviewActivity extends Activity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         recList.setAdapter(new OverviewAdapter());
+        recList.setItemAnimator(new FadeInLeftAnimator());
     }
 
     @Override

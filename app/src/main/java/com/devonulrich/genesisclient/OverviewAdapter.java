@@ -16,9 +16,9 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
         data = new ArrayList<>();
     }
 
-    public void addData(ArrayList<ArrayList<String>> data) {
-        this.data = data;
-        notifyDataSetChanged();
+    public void addData(ArrayList<String> newData) {
+        data.add(newData);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     public int getItemCount() {

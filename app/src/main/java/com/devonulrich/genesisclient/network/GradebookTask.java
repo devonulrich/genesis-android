@@ -47,11 +47,17 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
             e.printStackTrace();
         }
 
-        return data;
-    }
-
-    protected void onPostExecute(ArrayList<ArrayList<String>> result) {
+        //do this when data is organized - similar to onPostExecute(), but not on the main thread
         RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
-        ((OverviewAdapter) recList.getAdapter()).addData(result);
+        for (ArrayList<String> dataSet : data) {
+            ((OverviewAdapter) recList.getAdapter()).addData(dataSet);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return data;
     }
 }
