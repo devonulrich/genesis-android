@@ -19,6 +19,7 @@ public class LauncherActivity extends Activity {
         if(!li.autoLogin) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else {
             LoginTask lt = new LoginTask(this);
             lt.execute(li);
