@@ -12,6 +12,10 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
 
     private ArrayList<ArrayList<String>> data;
 
+    public OverviewAdapter() {
+        data = new ArrayList<>();
+    }
+
     public OverviewAdapter(ArrayList<ArrayList<String>> data) {
         this.data = data;
     }

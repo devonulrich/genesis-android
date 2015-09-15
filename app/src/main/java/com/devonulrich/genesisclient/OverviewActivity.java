@@ -1,7 +1,6 @@
 package com.devonulrich.genesisclient;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +24,7 @@ public class OverviewActivity extends Activity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+        recList.setAdapter(new OverviewAdapter());
 
         Intent intent = getIntent();
         String session = intent.getStringExtra(getString(R.string.id_session_id));
