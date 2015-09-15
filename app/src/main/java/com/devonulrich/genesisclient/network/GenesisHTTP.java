@@ -18,6 +18,9 @@ public class GenesisHTTP {
     public static final String OVERVIEW_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=" +
                     "studentdata&tab2=studentsummary&action=form&studentid=";
+    public static final String GRADEBOOK_PAGE_URL =
+            "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata" +
+                    "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
 
     //returns the cookie, which contains the session ID
     public static Connection.Response login(LoginInfo li) {
@@ -58,6 +61,19 @@ public class GenesisHTTP {
             page.cookie("JSESSIONID", session);
             return page.execute();
         } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Connection.Response gradebook(String session, String id) {
+        try {
+            Connection page = Jsoup.connect(GRADEBOOK_PAGE_URL + id);
+            page.userAgent(USER_AGENT);
+            page.followRedirects(true);
+            page.cookie("JSESSIONID", session);
+            return page.execute();
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

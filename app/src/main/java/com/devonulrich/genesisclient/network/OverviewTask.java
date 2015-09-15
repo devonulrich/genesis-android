@@ -1,21 +1,8 @@
 package com.devonulrich.genesisclient.network;
 
-import android.app.ActionBar;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.devonulrich.genesisclient.OverviewActivity;
-import com.devonulrich.genesisclient.OverviewAdapter;
-import com.devonulrich.genesisclient.R;
 
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
@@ -23,12 +10,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>>{
 
     private OverviewActivity activity;
+    private String session;
+    private String id;
 
     public OverviewTask(OverviewActivity a) {
         activity = a;
@@ -36,7 +24,9 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
 
     @Override
     protected ArrayList<ArrayList<String>> doInBackground(String... params) {
-        return parse(GenesisHTTP.overview(params[0], params[1]));
+        session = params[0];
+        id = params[1];
+        return parse(GenesisHTTP.overview(session, id));
     }
 
     private ArrayList<ArrayList<String>> parse(Connection.Response response) {
@@ -68,7 +58,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
     }
 
     protected void onPostExecute(ArrayList<ArrayList<String>> result) {
-        RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
-        recList.setAdapter(new OverviewAdapter(result));
+        GradebookTask gt = new GradebookTask(activity, result);
+        gt.execute(session, id);
     }
 }

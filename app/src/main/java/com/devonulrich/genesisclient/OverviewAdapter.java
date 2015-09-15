@@ -23,8 +23,12 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     public void onBindViewHolder(OverviewViewHolder viewHolder, int i) {
         ArrayList<String> classInfo = data.get(i);
 
+        if (classInfo.get(1).equals("Introduction to Engineering"))
+            classInfo.set(1, "Intro to Engineering");
+
         viewHolder.period.setText(classInfo.get(0));
         viewHolder.schoolClass.setText(classInfo.get(1));
+        viewHolder.grade.setText(classInfo.get(6));
         viewHolder.teacher.setText(classInfo.get(5));
         viewHolder.room.setText(classInfo.get(4));
     }
