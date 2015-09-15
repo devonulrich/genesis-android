@@ -4,14 +4,17 @@ import android.app.ActionBar;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.devonulrich.genesisclient.OverviewActivity;
+import com.devonulrich.genesisclient.OverviewAdapter;
 import com.devonulrich.genesisclient.R;
 
 import org.jsoup.Connection;
@@ -20,6 +23,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>>{
@@ -64,58 +68,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
     }
 
     protected void onPostExecute(ArrayList<ArrayList<String>> result) {
-        TableLayout tl = (TableLayout) activity.findViewById(R.id.schedule_table);
-
-        boolean isOdd = true;
-        int largestHeight = 0;
-        for(ArrayList<String> classDetails : result) {
-            TableRow tr = new TableRow(activity);
-            Drawable background = activity.getResources().getDrawable(
-                    isOdd ? R.drawable.schedule_table_odd : R.drawable.schedule_table_even,
-                    activity.getTheme());
-            isOdd = !isOdd;
-            tr.setBackground(background);
-            tr.setPadding(2, 2, 2, 2);
-
-            TextView period = new TextView(activity);
-            period.setText(classDetails.get(0));
-            period.setTextSize(12);
-            TableRow.LayoutParams periodParams = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-            periodParams.setMarginEnd(10);
-            tr.addView(period, periodParams);
-
-            TextView name = new TextView(activity);
-            name.setText(classDetails.get(1));
-            name.setTextSize(12);
-            TableRow.LayoutParams nameParams = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-            nameParams.setMarginEnd(10);
-            nameParams.weight = 1;
-            tr.addView(name, nameParams);
-
-            TextView room = new TextView(activity);
-            room.setText(classDetails.get(4));
-            room.setTextSize(12);
-            TableRow.LayoutParams roomParams = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-            roomParams.setMarginEnd(10);
-            tr.addView(room, roomParams);
-
-            TextView teacher = new TextView(activity);
-            teacher.setText(classDetails.get(5));
-            teacher.setTextSize(12);
-            TableRow.LayoutParams teacherParams = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-            teacherParams.setMarginEnd(10);
-            teacherParams.weight = 1;
-            tr.addView(teacher, teacherParams);
-
-            if(tr.getHeight() > largestHeight) largestHeight = tr.getHeight();
-
-            tl.addView(tr);
-        }
-
-        tl.setVisibility(View.VISIBLE);
+        RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
+        recList.setAdapter(new OverviewAdapter(result));
     }
 }

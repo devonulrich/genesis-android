@@ -1,8 +1,11 @@
 package com.devonulrich.genesisclient;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +20,12 @@ public class OverviewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
+        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+
         Intent intent = getIntent();
         String session = intent.getStringExtra(getString(R.string.id_session_id));
         String id = intent.getStringExtra(getString(R.string.id_student_id));
@@ -30,19 +39,19 @@ public class OverviewActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_overview, menu);
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
         //instead of going back to the main activity, go to the home screen
         Intent i = new Intent(Intent.ACTION_MAIN);
         i.addCategory(Intent.CATEGORY_HOME);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_overview, menu);
+        return true;
     }
 
     @Override
