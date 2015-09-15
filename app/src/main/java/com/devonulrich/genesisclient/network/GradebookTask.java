@@ -52,6 +52,6 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
 
     protected void onPostExecute(ArrayList<ArrayList<String>> result) {
         RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
-        recList.setAdapter(new OverviewAdapter(result));
+        ((OverviewAdapter) recList.getAdapter()).addData(result);
     }
 }

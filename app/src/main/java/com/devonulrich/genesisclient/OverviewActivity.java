@@ -19,13 +19,6 @@ public class OverviewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        recList.setAdapter(new OverviewAdapter());
-
         Intent intent = getIntent();
         String session = intent.getStringExtra(getString(R.string.id_session_id));
         String id = intent.getStringExtra(getString(R.string.id_student_id));
@@ -36,6 +29,13 @@ public class OverviewActivity extends Activity {
             Intent i = new Intent(this, LauncherActivity.class);
             startActivity(i);
         }
+
+        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        recList.setAdapter(new OverviewAdapter());
     }
 
     @Override
