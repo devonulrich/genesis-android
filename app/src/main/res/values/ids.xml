@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="id_log_tag">GenesisClient</string>
+    <string name="id_login_show_error">com.devonulrich.genesisclient.login_show_error</string>
+    <string name="id_session_id">com.devonulrich.genesisclient.session_id</string>
+    <string name="id_student_id">com.devonulrich.genesisclient.student_id</string>
+    <string name="id_appwidget_id">com.devonurlich.genesisclient.appwidget_id</string>
+</resources>
