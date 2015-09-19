@@ -17,7 +17,9 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     }
 
     public void addData(ArrayList<String> newData) {
+        //add the data
         data.add(newData);
+        //tell the adapter that an item was added - necessary for animations
         notifyItemInserted(getItemCount() - 1);
     }
 
@@ -28,9 +30,12 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     public void onBindViewHolder(OverviewViewHolder viewHolder, int i) {
         ArrayList<String> classInfo = data.get(i);
 
+        //special case : if the class is "Introduction to Engineering", then shorten it, since
+        //it would otherwise cause layout issues
         if (classInfo.get(1).equals("Introduction to Engineering"))
             classInfo.set(1, "Intro to Engineering");
 
+        //set all of the parts of the layout to the given data
         viewHolder.period.setText(classInfo.get(0));
         viewHolder.schoolClass.setText(classInfo.get(1));
         viewHolder.grade.setText(classInfo.get(6));
@@ -39,13 +44,16 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     }
 
     public OverviewViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        //inflate the view
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.overview_item, viewGroup, false);
 
+        //get the references for the view
         return new OverviewViewHolder(itemView);
     }
 
     public static class OverviewViewHolder extends RecyclerView.ViewHolder {
+        //stores references to all items in the item layout
 
         protected TextView period;
         protected TextView schoolClass;

@@ -55,6 +55,7 @@ public class GenesisHTTP {
 
     public static Connection.Response overview(String session, String id) {
         try {
+            //get the page with the given student ID and session ID
             Connection page = Jsoup.connect(OVERVIEW_PAGE_URL + id);
             page.userAgent(USER_AGENT);
             page.followRedirects(true);
@@ -68,6 +69,7 @@ public class GenesisHTTP {
 
     public static Connection.Response gradebook(String session, String id) {
         try {
+            //get the page with the given student ID and session ID
             Connection page = Jsoup.connect(GRADEBOOK_PAGE_URL + id);
             page.userAgent(USER_AGENT);
             page.followRedirects(true);

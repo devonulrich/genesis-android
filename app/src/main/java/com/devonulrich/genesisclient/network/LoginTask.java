@@ -26,27 +26,35 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
     }
 
     protected Connection.Response doInBackground(LoginInfo... info) {
+        //save the student's ID for later use
         studentId = info[0].id;
+        //log in
         return GenesisHTTP.login(info[0]);
     }
 
     protected void onPostExecute(Connection.Response result) {
         if(activity instanceof LoginActivity) {
+            //if we logged in from LoginActivity
             ((LoginActivity) activity).setLoggedIn(result != null);
 
             if(result != null) {
                 //successfully logged in from LoginActivity
+                //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
                 i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
                 activity.startActivity(i);
             } else {
                 //did not log in from LoginActivity
+                //make the error text visible
                 ((LoginActivity) activity).setErrorVisibility(true);
             }
         } else if(activity instanceof LauncherActivity) {
+            //if we logged in from LauncherActivity
+
             if(result != null) {
                 //successfully logged in from LauncherActivity
+                //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
                 i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
@@ -54,6 +62,7 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             } else {
                 //did not log in from LauncherActivity
+                //go to LoginActivity, and show the error text
                 Intent i = new Intent(activity, LoginActivity.class);
                 i.putExtra(activity.getString(R.string.id_login_show_error), true);
                 activity.startActivity(i);

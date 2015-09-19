@@ -24,8 +24,10 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
 
     @Override
     protected ArrayList<ArrayList<String>> doInBackground(String... params) {
+        //save the session ID and student ID for later use
         session = params[0];
         id = params[1];
+        //get the overview page
         return parse(GenesisHTTP.overview(session, id));
     }
 
@@ -49,6 +51,8 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
                 }
                 arr.add(arr2);
             }
+            //this nested for loop creates a 2 dimensional array of all the classes, and all the
+            //info about the classes
 
             return arr;
         } catch(IOException e) {
@@ -58,6 +62,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
     }
 
     protected void onPostExecute(ArrayList<ArrayList<String>> result) {
+        //we're not done - get the class grades as well
         GradebookTask gt = new GradebookTask(activity, result);
         gt.execute(session, id);
     }
