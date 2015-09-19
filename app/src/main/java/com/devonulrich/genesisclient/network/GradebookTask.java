@@ -1,6 +1,7 @@
 package com.devonulrich.genesisclient.network;
 
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 
 import com.devonulrich.genesisclient.OverviewActivity;
@@ -65,17 +66,26 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
             e.printStackTrace();
         }
 
-        //do this when data is organized - similar to onPostExecute(), but not on the main thread
-        RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
-        for (ArrayList<String> dataSet : data) {
-            ((OverviewAdapter) recList.getAdapter()).addData(dataSet);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        return data;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<ArrayList<String>> arrayLists) {
+        final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
+        int delay = 0;
+        for (final ArrayList<String> dataSet : data) {
+            //cycle through all class data sets
+            Handler handler = new Handler();
+            //add the data set to the view, but with a delay to create a nice animation
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((OverviewAdapter) recList.getAdapter()).addData(dataSet);
+                }
+            }, delay);
+            //increase the delay to make each data set appear after the one before it
+            delay += 80;
         }
 
-        return data;
     }
 }
