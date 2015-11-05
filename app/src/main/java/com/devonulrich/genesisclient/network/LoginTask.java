@@ -33,11 +33,11 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
     }
 
     protected void onPostExecute(Connection.Response result) {
-        if(activity instanceof LoginActivity) {
+        if (activity instanceof LoginActivity) {
             //if we logged in from LoginActivity
             ((LoginActivity) activity).setLoggedIn(result != null);
 
-            if(result != null) {
+            if (result != null) {
                 //successfully logged in from LoginActivity
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
@@ -50,10 +50,10 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 //make the error text visible
                 ((LoginActivity) activity).setErrorVisibility(true);
             }
-        } else if(activity instanceof LauncherActivity) {
+        } else if (activity instanceof LauncherActivity) {
             //if we logged in from LauncherActivity
 
-            if(result != null) {
+            if (result != null) {
                 //successfully logged in from LauncherActivity
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);

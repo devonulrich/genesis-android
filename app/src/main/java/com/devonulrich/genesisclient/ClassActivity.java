@@ -1,9 +1,9 @@
 package com.devonulrich.genesisclient;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,7 +28,7 @@ public class ClassActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
         ActionBar ab = getActionBar();
-        if(ab != null) ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = this.getIntent().getExtras();
         period = extras.getString(getString(R.string.id_class_period));
@@ -40,17 +40,17 @@ public class ClassActivity extends Activity {
 
         this.setTitle(className);
 
-        ((TextView)this.findViewById(R.id.class_period)).setText(getString(
+        ((TextView) this.findViewById(R.id.class_period)).setText(getString(
                 R.string.class_period, period));
-        ((TextView)this.findViewById(R.id.class_grade)).setText(grade);
-        ((TextView)this.findViewById(R.id.class_teacher)).setText(teacher);
-        ((TextView)this.findViewById(R.id.class_room)).setText(room);
+        ((TextView) this.findViewById(R.id.class_grade)).setText(grade);
+        ((TextView) this.findViewById(R.id.class_teacher)).setText(teacher);
+        ((TextView) this.findViewById(R.id.class_room)).setText(room);
 
 
         String session = extras.getString(getString(R.string.id_session_id));
         String id = extras.getString(getString(R.string.id_student_id));
 
-        if(session != null) {
+        if (session != null) {
             ClassTask ct = new ClassTask(this);
             ct.execute(session, id, classID);
             Log.d("deovnulrich", id + " " + classID);
@@ -72,7 +72,7 @@ public class ClassActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return true;

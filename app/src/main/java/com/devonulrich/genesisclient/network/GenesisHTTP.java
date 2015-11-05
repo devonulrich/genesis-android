@@ -1,7 +1,5 @@
 package com.devonulrich.genesisclient.network;
 
-import android.util.Log;
-
 import com.devonulrich.genesisclient.login.LoginInfo;
 
 import org.jsoup.Connection;
@@ -47,12 +45,12 @@ public class GenesisHTTP {
 
             //Genesis redirects the user back to the login page if the info is incorrect,
             //so if the response url is different to the login url, then the login was successful
-            if(!postResponse.url().toString().equals(LOGIN_PAGE_URL)) {
+            if (!postResponse.url().toString().equals(LOGIN_PAGE_URL)) {
                 return postResponse;
             } else {
                 return null;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -66,7 +64,7 @@ public class GenesisHTTP {
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
             return page.execute();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -95,7 +93,7 @@ public class GenesisHTTP {
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
             return page.execute();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

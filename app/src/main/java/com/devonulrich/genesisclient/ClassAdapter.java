@@ -39,7 +39,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
         viewHolder.points.setText(assignmentInfo.get(14) + " / " + assignmentInfo.get(16));
         viewHolder.grade.setText(assignmentInfo.get(17));
 
-        for(int x = 0; x < assignmentInfo.size(); x++) {
+        for (int x = 0; x < assignmentInfo.size(); x++) {
             Log.d("devonulrich", x + ": " + assignmentInfo.get(x));
         }
     }

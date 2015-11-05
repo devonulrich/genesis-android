@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="@string/login_email_label"
-            android:id="@+id/email" >
+            android:id="@+id/email">
+
             <requestFocus />
         </EditText>
 

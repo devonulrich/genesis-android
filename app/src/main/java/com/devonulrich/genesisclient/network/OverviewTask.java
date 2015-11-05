@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>>{
+public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>> {
 
     private OverviewActivity activity;
     private String session;
@@ -42,11 +42,11 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
 
             ArrayList<ArrayList<String>> arr = new ArrayList<>();
             //cycle through all rows in the schedule table
-            for(Element classRow : studentInfo.select("table.list").get(2)
+            for (Element classRow : studentInfo.select("table.list").get(2)
                     .select("tr.listrowodd, tr.listroweven")) {
                 ArrayList<String> arr2 = new ArrayList<>();
                 //cycle through all table data for each school-class
-                for(Element classInfo : classRow.getElementsByTag("td")) {
+                for (Element classInfo : classRow.getElementsByTag("td")) {
                     arr2.add(classInfo.text());
                 }
                 arr.add(arr2);
@@ -55,7 +55,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
             //info about the classes
 
             return arr;
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }

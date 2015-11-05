@@ -3,7 +3,6 @@ package com.devonulrich.genesisclient.network;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.OverviewAdapter;
@@ -62,7 +61,7 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
                 String className = classData.get(1);
                 String grade = "";
                 String id = "";
-                if(classGrades.get(className) != null) {
+                if (classGrades.get(className) != null) {
                     //get the grade specific to this class
                     grade = classGrades.get(className).split("---")[0];
                     //get the ID for this class

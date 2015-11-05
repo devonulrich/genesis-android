@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
         idET.setText(li.id);
 
         Intent intent = getIntent();
-        if(intent.getBooleanExtra(getString(R.string.id_login_show_error), false)) {
+        if (intent.getBooleanExtra(getString(R.string.id_login_show_error), false)) {
             //if this activity is supposed to show an error, then show it
             setErrorVisibility(true);
         }
@@ -98,7 +98,7 @@ public class LoginActivity extends Activity {
     }
 
     public void setErrorVisibility(boolean visibility) {
-        if(visibility) {
+        if (visibility) {
             //show the error text
             final TextView errorTextView = (TextView) findViewById(R.id.error_label);
             errorTextView.setVisibility(View.VISIBLE);

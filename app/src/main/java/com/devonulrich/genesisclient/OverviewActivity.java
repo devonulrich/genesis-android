@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.devonulrich.genesisclient.network.OverviewTask;
 
@@ -28,7 +26,7 @@ public class OverviewActivity extends Activity {
         Intent intent = getIntent();
         session = intent.getStringExtra(getString(R.string.id_session_id));
         id = intent.getStringExtra(getString(R.string.id_student_id));
-        if(session != null) {
+        if (session != null) {
             //if the previous activity passed a session id, then try to get the overview info
             OverviewTask ot = new OverviewTask(this);
             ot.execute(session, id);
@@ -59,12 +57,12 @@ public class OverviewActivity extends Activity {
 
     public void onCardClick(View view) {
         //get all data from the card which was clicked
-        String period = ((TextView)view.findViewById(R.id.card_period)).getText().toString();
-        String className = ((TextView)view.findViewById(R.id.card_class)).getText().toString();
-        String teacher = ((TextView)view.findViewById(R.id.card_teacher)).getText().toString();
-        String grade = ((TextView)view.findViewById(R.id.card_grade)).getText().toString();
-        String room = ((TextView)view.findViewById(R.id.card_room)).getText().toString();
-        String classID = ((TextView)view.findViewById(R.id.card_id)).getText().toString();
+        String period = ((TextView) view.findViewById(R.id.card_period)).getText().toString();
+        String className = ((TextView) view.findViewById(R.id.card_class)).getText().toString();
+        String teacher = ((TextView) view.findViewById(R.id.card_teacher)).getText().toString();
+        String grade = ((TextView) view.findViewById(R.id.card_grade)).getText().toString();
+        String room = ((TextView) view.findViewById(R.id.card_room)).getText().toString();
+        String classID = ((TextView) view.findViewById(R.id.card_id)).getText().toString();
         classID = classID.replace('/', ':');//the slash in the class ID is replaced with a colon in
         // the URL, so we must fix it for the URL to be correct
 

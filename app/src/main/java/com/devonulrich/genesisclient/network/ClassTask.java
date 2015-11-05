@@ -3,11 +3,9 @@ package com.devonulrich.genesisclient.network;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.devonulrich.genesisclient.ClassActivity;
 import com.devonulrich.genesisclient.ClassAdapter;
-import com.devonulrich.genesisclient.OverviewAdapter;
 import com.devonulrich.genesisclient.R;
 
 import org.jsoup.Connection;
@@ -45,13 +43,13 @@ public class ClassTask extends AsyncTask<String, Void, ArrayList<ArrayList<Strin
             ArrayList<ArrayList<String>> data = new ArrayList<>();
 
             //cycle through each row - a row is for one assignment
-            for(Element assignmentRow : html.select("table.list").get(0)
+            for (Element assignmentRow : html.select("table.list").get(0)
                     .select("tr.listrowodd, tr.listroweven")) {
                 //create an arraylist for storing this row of data
                 ArrayList<String> dataRow = new ArrayList<>();
 
                 //cycle through all the data for this one assignment
-                for(Element assignmentInfo : assignmentRow.getElementsByTag("td")) {
+                for (Element assignmentInfo : assignmentRow.getElementsByTag("td")) {
                     //add the data to the arraylist
                     dataRow.add(assignmentInfo.text());
                 }
@@ -63,7 +61,7 @@ public class ClassTask extends AsyncTask<String, Void, ArrayList<ArrayList<Strin
             //returns a 2D arraylist - contains arraylists for each assignment, and they contain
             //info about the assignment (name, date, etc)
             return data;
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
