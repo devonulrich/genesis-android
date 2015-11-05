@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:id="@+id/class_item_cardview" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/class_card_grade"
+            android:layout_alignParentTop="true"
+            android:text="Secret Life of Bees Essay"
+            android:textSize="20sp"
+            android:id="@+id/class_card_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="88%"
+            android:textSize="20sp"
+            android:id="@+id/class_card_grade" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/class_card_name"
+            android:text="Test"
+            android:id="@+id/class_card_category" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/class_card_category"
+            android:layout_below="@id/class_card_name"
+            android:layout_marginStart="10dp"
+            android:text="9/3/2015"
+            android:id="@+id/class_card_date" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/class_card_date"
+            android:text="88 / 100"
+            android:gravity="center"
+            android:id="@+id/class_card_points" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

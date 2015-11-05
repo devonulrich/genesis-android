@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.devonulrich.genesisclient.ClassActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#019BC6"
+        android:elevation="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milewska, Anna"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/class_teacher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100.00%"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/class_grade" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Period 1"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/class_teacher"
+            android:id="@+id/class_period" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A2"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/class_grade"
+            android:id="@+id/class_room" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/class_recyclerview" />
+
+</LinearLayout>
