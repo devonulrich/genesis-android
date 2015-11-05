@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="5dp"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:onClick="onCardClick"
     android:id="@+id/card_view" >
 
     <RelativeLayout
@@ -56,6 +60,14 @@
             android:layout_alignParentEnd="true"
             android:text="A2"
             android:id="@+id/card_room" />
+
+        <!--not actually part of the layout - simply used for storing the ID-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="1112:1"
+            android:id="@+id/card_id" />
 
     </RelativeLayout>
 

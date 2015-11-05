@@ -20,8 +20,8 @@ public class LauncherActivity extends Activity {
         if(!li.autoLogin) {
             //if the user chose not to log in automatically, then go to the login activity
             Intent i = new Intent(this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(i);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else {
             //otherwise, attempt to log in
             LoginTask lt = new LoginTask(this);

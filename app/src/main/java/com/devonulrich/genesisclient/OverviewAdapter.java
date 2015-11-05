@@ -41,6 +41,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
         viewHolder.grade.setText(classInfo.get(6));
         viewHolder.teacher.setText(classInfo.get(5));
         viewHolder.room.setText(classInfo.get(4));
+        viewHolder.id.setText(classInfo.get(7));
     }
 
     public OverviewViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -60,6 +61,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
         protected TextView grade;
         protected TextView teacher;
         protected TextView room;
+        protected TextView id;
 
         public OverviewViewHolder(View v) {
             super(v);
@@ -69,6 +71,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
             grade = (TextView) v.findViewById(R.id.card_grade);
             teacher = (TextView) v.findViewById(R.id.card_teacher);
             room = (TextView) v.findViewById(R.id.card_room);
+            id = (TextView) v.findViewById(R.id.card_id);
         }
     }
 }

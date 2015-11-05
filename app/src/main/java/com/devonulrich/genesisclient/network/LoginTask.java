@@ -43,6 +43,7 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 Intent i = new Intent(activity, OverviewActivity.class);
                 i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
             } else {
                 //did not log in from LoginActivity
@@ -58,15 +59,15 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 Intent i = new Intent(activity, OverviewActivity.class);
                 i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             } else {
                 //did not log in from LauncherActivity
                 //go to LoginActivity, and show the error text
                 Intent i = new Intent(activity, LoginActivity.class);
                 i.putExtra(activity.getString(R.string.id_login_show_error), true);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         }
     }

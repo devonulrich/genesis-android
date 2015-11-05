@@ -25,6 +25,10 @@
             android:name=".OverviewActivity"
             android:label="@string/overview_title" >
         </activity>
+        <activity
+            android:name=".ClassActivity"
+            android:label="@string/title_activity_class" >
+        </activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.devonulrich.genesisclient.network;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.OverviewAdapter;
@@ -46,10 +47,12 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
                 //overview page, otherwise it would have the class ID number in front of it
                 //ex: "1000/2 - English I Honors"
                 String className = classRow.getElementsByTag("td").get(0).text().split(" - ")[1];
+                //save the class id for later use
+                String classID = classRow.getElementsByTag("td").get(0).text().split(" - ")[0];
                 //get the class grade, which is the 3rd column in
                 String classGrade = classRow.getElementsByTag("td").get(2).text();
                 //add the class name and grade to the hashmap
-                classGrades.put(className, classGrade);
+                classGrades.put(className, classGrade + "---" + classID);
             }
 
             for (ArrayList<String> classData : data) {
@@ -57,10 +60,17 @@ public class GradebookTask extends AsyncTask<String, Void, ArrayList<ArrayList<S
 
                 //get the name of the current class
                 String className = classData.get(1);
-                //get the grade specific to this class
-                String grade = classGrades.get(className);
+                String grade = "";
+                String id = "";
+                if(classGrades.get(className) != null) {
+                    //get the grade specific to this class
+                    grade = classGrades.get(className).split("---")[0];
+                    //get the ID for this class
+                    id = classGrades.get(className).split("---")[1];
+                }
                 //add the grade to the class's data set
                 classData.add(grade);
+                classData.add(id);
             }
         } catch (IOException e) {
             e.printStackTrace();

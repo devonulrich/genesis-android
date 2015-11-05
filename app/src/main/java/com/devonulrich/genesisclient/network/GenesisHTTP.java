@@ -1,5 +1,7 @@
 package com.devonulrich.genesisclient.network;
 
+import android.util.Log;
+
 import com.devonulrich.genesisclient.login.LoginInfo;
 
 import org.jsoup.Connection;
@@ -21,6 +23,9 @@ public class GenesisHTTP {
     public static final String GRADEBOOK_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata" +
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
+    public static final String CLASS_PAGE_URL_1 =
+            "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
+    public static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP1&courseAndSection=";
 
     //returns the cookie, which contains the session ID
     public static Connection.Response login(LoginInfo li) {
@@ -76,6 +81,21 @@ public class GenesisHTTP {
             page.cookie("JSESSIONID", session);
             return page.execute();
         } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Connection.Response classPage(String session, String id, String classID) {
+        String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + classID;
+        try {
+            //get the page
+            Connection page = Jsoup.connect(fullURL);
+            page.userAgent(USER_AGENT);
+            page.followRedirects(true);
+            page.cookie("JSESSIONID", session);
+            return page.execute();
+        } catch(Exception e) {
             e.printStackTrace();
             return null;
         }

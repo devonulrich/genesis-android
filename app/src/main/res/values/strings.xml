@@ -16,4 +16,7 @@
     <string name="overview_title">Overview</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_class">ClassActivity</string>
+
+    <string name="class_period">Period %1$s</string>
 </resources>
