@@ -10,9 +10,7 @@ import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.R;
 import com.devonulrich.genesisclient.login.LoginInfo;
 
-import org.jsoup.Connection;
-
-public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
+public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
 
     private Activity activity;
     private String studentId;
@@ -25,14 +23,14 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
         //Toast.makeText(activity, "Logging in...", Toast.LENGTH_SHORT).show();
     }
 
-    protected Connection.Response doInBackground(LoginInfo... info) {
+    protected String doInBackground(LoginInfo... info) {
         //save the student's ID for later use
         studentId = info[0].id;
         //log in
         return GenesisHTTP.login(info[0]);
     }
 
-    protected void onPostExecute(Connection.Response result) {
+    protected void onPostExecute(String result) {
         if (activity instanceof LoginActivity) {
             //if we logged in from LoginActivity
             ((LoginActivity) activity).setLoggedIn(result != null);
@@ -41,7 +39,7 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 //successfully logged in from LoginActivity
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
-                i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
+                i.putExtra(activity.getString(R.string.id_session_id), result);
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
@@ -57,7 +55,7 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, Connection.Response> {
                 //successfully logged in from LauncherActivity
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
-                i.putExtra(activity.getString(R.string.id_session_id), result.cookie("JSESSIONID"));
+                i.putExtra(activity.getString(R.string.id_session_id), result);
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);

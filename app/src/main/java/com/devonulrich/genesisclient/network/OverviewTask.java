@@ -1,16 +1,15 @@
 package com.devonulrich.genesisclient.network;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 
 import com.devonulrich.genesisclient.OverviewActivity;
+import com.devonulrich.genesisclient.OverviewAdapter;
+import com.devonulrich.genesisclient.R;
 
-import org.jsoup.Connection;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>> {
 
@@ -28,42 +27,45 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
         session = params[0];
         id = params[1];
         //get the overview page
-        return parse(GenesisHTTP.overview(session, id));
+        ArrayList<ArrayList<String>> classData = GenesisHTTP.overview(session, id);
+        HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
+        addData(classData, classGrades);
+
+        return classData;
     }
 
-    private ArrayList<ArrayList<String>> parse(Connection.Response response) {
-        try {
-            //parse the document
-            Document html = response.parse();
-            //get the "notecard" items - the divs which show the student overviews
-            Elements students = html.getElementsByClass("notecard");
-            //get the first one (the one for the current student ID)
-            Element studentInfo = students.get(0);
+    protected void addData(ArrayList<ArrayList<String>> table, HashMap<String, String> data) {
+        for (ArrayList<String> row : table) {
+            String className = row.get(1);
+            String classGrade = "";
+            String classID = "";
 
-            ArrayList<ArrayList<String>> arr = new ArrayList<>();
-            //cycle through all rows in the schedule table
-            for (Element classRow : studentInfo.select("table.list").get(2)
-                    .select("tr.listrowodd, tr.listroweven")) {
-                ArrayList<String> arr2 = new ArrayList<>();
-                //cycle through all table data for each school-class
-                for (Element classInfo : classRow.getElementsByTag("td")) {
-                    arr2.add(classInfo.text());
-                }
-                arr.add(arr2);
+            String classData = data.get(className);
+            if (classData != null) {
+                classGrade = classData.split("---")[0];
+                classID = classData.split("---")[1];
             }
-            //this nested for loop creates a 2 dimensional array of all the classes, and all the
-            //info about the classes
 
-            return arr;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            row.add(classGrade);
+            row.add(classID);
         }
     }
 
     protected void onPostExecute(ArrayList<ArrayList<String>> result) {
-        //we're not done - get the class grades as well
-        GradebookTask gt = new GradebookTask(activity, result);
-        gt.execute(session, id);
+        final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
+        int delay = 0;
+        for (final ArrayList<String> dataSet : result) {
+            //cycle through all class data sets
+            Handler handler = new Handler();
+            //add the data set to the view, but with a delay to create a nice animation
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((OverviewAdapter) recList.getAdapter()).addData(dataSet);
+                }
+            }, delay);
+            //increase the delay to make each data set appear after the one before it
+            delay += 80;
+        }
     }
 }

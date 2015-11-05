@@ -4,7 +4,12 @@ import com.devonulrich.genesisclient.login.LoginInfo;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GenesisHTTP {
@@ -25,8 +30,8 @@ public class GenesisHTTP {
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
     public static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP1&courseAndSection=";
 
-    //returns the cookie, which contains the session ID
-    public static Connection.Response login(LoginInfo li) {
+    //returns the session ID
+    public static String login(LoginInfo li) {
         try {
             //load the login page, and get the cookie
             Connection loginPage = Jsoup.connect(LOGIN_PAGE_URL);
@@ -46,7 +51,7 @@ public class GenesisHTTP {
             //Genesis redirects the user back to the login page if the info is incorrect,
             //so if the response url is different to the login url, then the login was successful
             if (!postResponse.url().toString().equals(LOGIN_PAGE_URL)) {
-                return postResponse;
+                return postResponse.cookie("JSESSIONID");
             } else {
                 return null;
             }
@@ -56,35 +61,81 @@ public class GenesisHTTP {
         }
     }
 
-    public static Connection.Response overview(String session, String id) {
+    public static ArrayList<ArrayList<String>> overview(String session, String id) {
         try {
             //get the page with the given student ID and session ID
             Connection page = Jsoup.connect(OVERVIEW_PAGE_URL + id);
             page.userAgent(USER_AGENT);
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
-            return page.execute();
+            Connection.Response response = page.execute();
+
+            //parse the document
+            Document html = response.parse();
+            //get the "note card" items - the divs which show the student overviews
+            Elements students = html.getElementsByClass("notecard");
+            //get the first one (the one for the current student ID)
+            Element studentInfo = students.get(0);
+
+            ArrayList<ArrayList<String>> classesTable = new ArrayList<>();
+            //cycle through all rows in the schedule table
+            for (Element classRow : studentInfo.select("table.list").get(2)
+                    .select("tr.listrowodd, tr.listroweven")) {
+                ArrayList<String> classData = new ArrayList<>();
+                //cycle through all table data for each school-class
+                for (Element classInfo : classRow.getElementsByTag("td")) {
+                    classData.add(classInfo.text());
+                }
+                classesTable.add(classData);
+            }
+            //this nested for loop creates a 2 dimensional array of all the classes, and all the
+            //info about the classes
+
+            return classesTable;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Connection.Response gradebook(String session, String id) {
+    public static HashMap<String, String> gradebook(String session, String id) {
         try {
             //get the page with the given student ID and session ID
             Connection page = Jsoup.connect(GRADEBOOK_PAGE_URL + id);
             page.userAgent(USER_AGENT);
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
-            return page.execute();
+            Connection.Response response = page.execute();
+
+            //parse the document
+            Document html = response.parse();
+
+            //stores the names of classes as the key, and the grade and class ID as a value
+            HashMap<String, String> classGrades = new HashMap<>();
+            for (Element classRow : html.select("tr.listrowodd, tr.listroweven")) {
+                //cycle through all table rows (which contain class information and grades)
+                //get the class name by getting the list of table data, selecting the first one,
+                //getting the text, and getting the part after the ' - '
+                //the last part is necessary so the class name matches the class name from the
+                //overview page, otherwise it would have the class ID number in front of it
+                //ex: "1000/2 - English I Honors"
+                String className = classRow.getElementsByTag("td").get(0).text().split(" - ")[1];
+                //save the class id for later use
+                String classID = classRow.getElementsByTag("td").get(0).text().split(" - ")[0];
+                //get the class grade, which is the 3rd column in
+                String classGrade = classRow.getElementsByTag("td").get(2).text();
+                //add the class name and grade to the hashmap
+                classGrades.put(className, classGrade + "---" + classID);
+            }
+
+            return classGrades;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Connection.Response classPage(String session, String id, String classID) {
+    public static ArrayList<ArrayList<String>> classPage(String session, String id, String classID) {
         String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + classID;
         try {
             //get the page
@@ -92,7 +143,34 @@ public class GenesisHTTP {
             page.userAgent(USER_AGENT);
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
-            return page.execute();
+            Connection.Response response = page.execute();
+
+            //parse the document
+            Document html = response.parse();
+
+            //create a 2D arraylist for storing all the rows of data
+            ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+            //cycle through each row - a row is for one assignment
+            for (Element assignmentRow : html.select("table.list").get(0)
+                    .select("tr.listrowodd, tr.listroweven")) {
+                //create an arraylist for storing this row of data
+                ArrayList<String> dataRow = new ArrayList<>();
+
+                //cycle through all the data for this one assignment
+                for (Element assignmentInfo : assignmentRow.getElementsByTag("td")) {
+                    //add the data to the arraylist
+                    dataRow.add(assignmentInfo.text());
+                }
+
+                //add the arraylist to the bigger arraylist
+                data.add(dataRow);
+            }
+            //this nested for loop creates a 2 dimensional array of all the assignments, and all the
+            //info about the assignments
+
+            return data;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
