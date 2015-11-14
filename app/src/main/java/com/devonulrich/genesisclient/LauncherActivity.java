@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.devonulrich.genesisclient.login.LoginInfo;
-import com.devonulrich.genesisclient.login.LoginStore;
+import com.devonulrich.genesisclient.data.login.LoginInfo;
+import com.devonulrich.genesisclient.data.login.LoginStore;
 import com.devonulrich.genesisclient.network.LoginTask;
 
 public class LauncherActivity extends Activity {

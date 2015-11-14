@@ -9,8 +9,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.devonulrich.genesisclient.login.LoginInfo;
-import com.devonulrich.genesisclient.login.LoginStore;
+import com.devonulrich.genesisclient.data.login.LoginInfo;
+import com.devonulrich.genesisclient.data.login.LoginStore;
 import com.devonulrich.genesisclient.network.LoginTask;
 
 public class LoginActivity extends Activity {

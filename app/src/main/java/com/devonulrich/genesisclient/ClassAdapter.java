@@ -31,6 +31,9 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     public void onBindViewHolder(ClassViewHolder viewHolder, int i) {
         ArrayList<String> assignmentInfo = data.get(i);
 
+        //if we don't have all of the data, then stop trying to do anything
+        if(assignmentInfo.size() <= 17) return;
+
         //set all of the parts of the layout to the given data
         viewHolder.date.setText(assignmentInfo.get(1));
         String[] category = assignmentInfo.get(5).split("\\s+");
@@ -38,10 +41,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
         viewHolder.name.setText(assignmentInfo.get(7));
         viewHolder.points.setText(assignmentInfo.get(14) + " / " + assignmentInfo.get(16));
         viewHolder.grade.setText(assignmentInfo.get(17));
-
-        for (int x = 0; x < assignmentInfo.size(); x++) {
-            Log.d("devonulrich", x + ": " + assignmentInfo.get(x));
-        }
     }
 
     public ClassViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

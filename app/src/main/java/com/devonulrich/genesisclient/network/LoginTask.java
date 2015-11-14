@@ -8,7 +8,7 @@ import com.devonulrich.genesisclient.LauncherActivity;
 import com.devonulrich.genesisclient.LoginActivity;
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.R;
-import com.devonulrich.genesisclient.login.LoginInfo;
+import com.devonulrich.genesisclient.data.login.LoginInfo;
 
 public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
 
@@ -41,7 +41,6 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
                 Intent i = new Intent(activity, OverviewActivity.class);
                 i.putExtra(activity.getString(R.string.id_session_id), result);
                 i.putExtra(activity.getString(R.string.id_student_id), studentId);
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
             } else {
                 //did not log in from LoginActivity

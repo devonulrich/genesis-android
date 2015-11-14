@@ -1,4 +1,4 @@
-package com.devonulrich.genesisclient.login;
+package com.devonulrich.genesisclient.data.login;
 
 import android.content.Context;
 import android.content.SharedPreferences;

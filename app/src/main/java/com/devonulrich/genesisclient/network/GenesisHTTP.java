@@ -1,6 +1,6 @@
 package com.devonulrich.genesisclient.network;
 
-import com.devonulrich.genesisclient.login.LoginInfo;
+import com.devonulrich.genesisclient.data.login.LoginInfo;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -28,7 +28,7 @@ public class GenesisHTTP {
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
     public static final String CLASS_PAGE_URL_1 =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
-    public static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP1&courseAndSection=";
+    public static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP2&courseAndSection=";
 
     //returns the session ID
     public static String login(LoginInfo li) {
