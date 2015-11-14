@@ -7,11 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.OverviewAdapter;
 import com.devonulrich.genesisclient.R;
+import com.devonulrich.genesisclient.data.SchoolClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>>> {
+public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>> {
 
     private OverviewActivity activity;
     private String session;
@@ -22,46 +23,39 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<ArrayList<St
     }
 
     @Override
-    protected ArrayList<ArrayList<String>> doInBackground(String... params) {
+    protected ArrayList<SchoolClass> doInBackground(String... params) {
         //save the session ID and student ID for later use
         session = params[0];
         id = params[1];
         //get the overview page
-        ArrayList<ArrayList<String>> classData = GenesisHTTP.overview(session, id);
+        ArrayList<SchoolClass> classData = GenesisHTTP.overview(session, id);
         HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
         addData(classData, classGrades);
 
         return classData;
     }
 
-    protected void addData(ArrayList<ArrayList<String>> table, HashMap<String, String> data) {
-        for (ArrayList<String> row : table) {
-            String className = row.get(1);
-            String classGrade = "";
-            String classID = "";
-
-            String classData = data.get(className);
+    protected void addData(ArrayList<SchoolClass> table, HashMap<String, String> data) {
+        for (SchoolClass sc : table) {
+            String classData = data.get(sc.name);
             if (classData != null) {
-                classGrade = classData.split("---")[0];
-                classID = classData.split("---")[1];
+                sc.grade = classData.split("---")[0];
+                sc.id = classData.split("---")[1];
             }
-
-            row.add(classGrade);
-            row.add(classID);
         }
     }
 
-    protected void onPostExecute(ArrayList<ArrayList<String>> result) {
+    protected void onPostExecute(ArrayList<SchoolClass> result) {
         final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
         int delay = 0;
-        for (final ArrayList<String> dataSet : result) {
+        for (final SchoolClass sc : result) {
             //cycle through all class data sets
             Handler handler = new Handler();
             //add the data set to the view, but with a delay to create a nice animation
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((OverviewAdapter) recList.getAdapter()).addData(dataSet);
+                    ((OverviewAdapter) recList.getAdapter()).addData(sc);
                 }
             }, delay);
             //increase the delay to make each data set appear after the one before it

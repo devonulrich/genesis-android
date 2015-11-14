@@ -6,17 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.devonulrich.genesisclient.data.SchoolClass;
+
 import java.util.ArrayList;
 
 public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder> {
 
-    private ArrayList<ArrayList<String>> data;
+    private ArrayList<SchoolClass> data;
 
     public OverviewAdapter() {
         data = new ArrayList<>();
     }
 
-    public void addData(ArrayList<String> newData) {
+    public void addData(SchoolClass newData) {
         //add the data
         data.add(newData);
         //tell the adapter that an item was added - necessary for animations
@@ -28,20 +30,20 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     }
 
     public void onBindViewHolder(OverviewViewHolder viewHolder, int i) {
-        ArrayList<String> classInfo = data.get(i);
+        SchoolClass sc = data.get(i);
 
         //special case : if the class is "Introduction to Engineering", then shorten it, since
         //it would otherwise cause layout issues
-        if (classInfo.get(1).equals("Introduction to Engineering"))
-            classInfo.set(1, "Intro to Engineering");
+        if (sc.name.equals("Introduction to Engineering"))
+            sc.name = "Intro to Engineering";
 
         //set all of the parts of the layout to the given data
-        viewHolder.period.setText(classInfo.get(0));
-        viewHolder.schoolClass.setText(classInfo.get(1));
-        viewHolder.grade.setText(classInfo.get(6));
-        viewHolder.teacher.setText(classInfo.get(5));
-        viewHolder.room.setText(classInfo.get(4));
-        viewHolder.id.setText(classInfo.get(7));
+        viewHolder.period.setText(sc.period);
+        viewHolder.schoolClass.setText(sc.name);
+        viewHolder.grade.setText(sc.grade);
+        viewHolder.teacher.setText(sc.teacher);
+        viewHolder.room.setText(sc.room);
+        viewHolder.id.setText(sc.id);
     }
 
     public OverviewViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

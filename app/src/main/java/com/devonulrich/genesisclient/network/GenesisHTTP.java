@@ -1,5 +1,8 @@
 package com.devonulrich.genesisclient.network;
 
+import android.util.Log;
+
+import com.devonulrich.genesisclient.data.SchoolClass;
 import com.devonulrich.genesisclient.data.login.LoginInfo;
 
 import org.jsoup.Connection;
@@ -13,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GenesisHTTP {
+
+    private static final String LOG_TAG = GenesisHTTP.class.getSimpleName();
 
     public static final String USER_AGENT = "Mozilla/5.0";
 
@@ -61,7 +66,7 @@ public class GenesisHTTP {
         }
     }
 
-    public static ArrayList<ArrayList<String>> overview(String session, String id) {
+    public static ArrayList<SchoolClass> overview(String session, String id) {
         try {
             //get the page with the given student ID and session ID
             Connection page = Jsoup.connect(OVERVIEW_PAGE_URL + id);
@@ -77,16 +82,32 @@ public class GenesisHTTP {
             //get the first one (the one for the current student ID)
             Element studentInfo = students.get(0);
 
-            ArrayList<ArrayList<String>> classesTable = new ArrayList<>();
+            ArrayList<SchoolClass> classesTable = new ArrayList<>();
             //cycle through all rows in the schedule table
             for (Element classRow : studentInfo.select("table.list").get(2)
                     .select("tr.listrowodd, tr.listroweven")) {
-                ArrayList<String> classData = new ArrayList<>();
+                SchoolClass sc = new SchoolClass();
                 //cycle through all table data for each school-class
-                for (Element classInfo : classRow.getElementsByTag("td")) {
-                    classData.add(classInfo.text());
+                //get all columns
+                Elements columns = classRow.getElementsByTag("td");
+                for (int x = 0; x < columns.size(); x++) {
+                    Log.d(LOG_TAG, x + " : " + columns.get(x));
+                    switch(x) {
+                        case 0:
+                            sc.period = columns.get(x).text();
+                            break;
+                        case 1:
+                            sc.name = columns.get(x).text();
+                            break;
+                        case 4:
+                            sc.room = columns.get(x).text();
+                            break;
+                        case 5:
+                            sc.teacher = columns.get(x).text();
+                            break;
+                    }
                 }
-                classesTable.add(classData);
+                classesTable.add(sc);
             }
             //this nested for loop creates a 2 dimensional array of all the classes, and all the
             //info about the classes
