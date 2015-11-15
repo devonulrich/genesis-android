@@ -3,15 +3,20 @@ package com.devonulrich.genesisclient.network;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.devonulrich.genesisclient.ClassActivity;
 import com.devonulrich.genesisclient.ClassAdapter;
 import com.devonulrich.genesisclient.R;
 import com.devonulrich.genesisclient.data.ClassAssignment;
+import com.devonulrich.genesisclient.data.cache.ClassCache;
+import com.devonulrich.genesisclient.data.cache.OverviewCache;
 
 import java.util.ArrayList;
 
 public class ClassTask extends AsyncTask<String, Void, ArrayList<ClassAssignment>> {
+
+    private static final String LOG_TAG = ClassTask.class.getSimpleName();
 
     private ClassActivity activity;
 
@@ -21,17 +26,29 @@ public class ClassTask extends AsyncTask<String, Void, ArrayList<ClassAssignment
 
     @Override
     protected ArrayList<ClassAssignment> doInBackground(String... params) {
-        //save the session and id for later
+        //save the session and ids for later
         String session = params[0];
         String id = params[1];
         String classID = params[2];
-        return GenesisHTTP.classPage(session, id, classID);
+
+        if(ClassCache.exists(activity, classID)) {
+            //if there is a cache, then read and use it
+            Log.i(LOG_TAG, "Loaded class (" + classID + ") info from cache");
+            return ClassCache.readData(activity, classID);
+        } else {
+            //if there is no cache, then download new data
+            ArrayList<ClassAssignment> arr = GenesisHTTP.classPage(session, id, classID);
+            Log.i(LOG_TAG, "Downloaded class (" + classID + ") info from internet");
+            //save the downloaded data for later
+            ClassCache.writeData(activity, classID, arr);
+            return arr;
+        }
     }
 
     @Override
     protected void onPostExecute(ArrayList<ClassAssignment> result) {
         final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.class_recyclerview);
-        int delay = 0;
+        int delay = 200;
         for (final ClassAssignment assignment : result) {
             //cycle through all class data sets
             Handler handler = new Handler();
