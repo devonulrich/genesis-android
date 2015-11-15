@@ -7,19 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.devonulrich.genesisclient.data.ClassAssignment;
+
 import java.util.ArrayList;
 
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHolder> {
 
-    private ArrayList<ArrayList<String>> data;
+    private ArrayList<ClassAssignment> data;
 
     public ClassAdapter() {
         data = new ArrayList<>();
     }
 
-    public void addData(ArrayList<String> dataRow) {
+    public void addData(ClassAssignment assignment) {
         //add the data
-        data.add(dataRow);
+        data.add(assignment);
         //tell the adapter that an item was added - necessary for animations
         notifyItemInserted(getItemCount() - 1);
     }
@@ -29,18 +31,17 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     }
 
     public void onBindViewHolder(ClassViewHolder viewHolder, int i) {
-        ArrayList<String> assignmentInfo = data.get(i);
+        ClassAssignment assignment = data.get(i);
 
         //if we don't have all of the data, then stop trying to do anything
-        if(assignmentInfo.size() <= 17) return;
+        //if(assignmentInfo.size() <= 17) return;
 
         //set all of the parts of the layout to the given data
-        viewHolder.date.setText(assignmentInfo.get(1));
-        String[] category = assignmentInfo.get(5).split("\\s+");
-        viewHolder.category.setText(category[category.length - 1]);
-        viewHolder.name.setText(assignmentInfo.get(7));
-        viewHolder.points.setText(assignmentInfo.get(14) + " / " + assignmentInfo.get(16));
-        viewHolder.grade.setText(assignmentInfo.get(17));
+        viewHolder.date.setText(assignment.date);
+        viewHolder.category.setText(assignment.category);
+        viewHolder.name.setText(assignment.name);
+        viewHolder.points.setText(assignment.points);
+        viewHolder.grade.setText(assignment.grade);
     }
 
     public ClassViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

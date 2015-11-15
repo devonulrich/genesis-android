@@ -2,6 +2,7 @@ package com.devonulrich.genesisclient.network;
 
 import android.util.Log;
 
+import com.devonulrich.genesisclient.data.ClassAssignment;
 import com.devonulrich.genesisclient.data.SchoolClass;
 import com.devonulrich.genesisclient.data.login.LoginInfo;
 
@@ -16,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GenesisHTTP {
-
-    private static final String LOG_TAG = GenesisHTTP.class.getSimpleName();
 
     public static final String USER_AGENT = "Mozilla/5.0";
 
@@ -91,7 +90,6 @@ public class GenesisHTTP {
                 //get all columns
                 Elements columns = classRow.getElementsByTag("td");
                 for (int x = 0; x < columns.size(); x++) {
-                    Log.d(LOG_TAG, x + " : " + columns.get(x));
                     switch(x) {
                         case 0:
                             sc.period = columns.get(x).text();
@@ -156,7 +154,7 @@ public class GenesisHTTP {
         }
     }
 
-    public static ArrayList<ArrayList<String>> classPage(String session, String id, String classID) {
+    public static ArrayList<ClassAssignment> classPage(String session, String id, String classID) {
         String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + classID;
         try {
             //get the page
@@ -170,22 +168,40 @@ public class GenesisHTTP {
             Document html = response.parse();
 
             //create a 2D arraylist for storing all the rows of data
-            ArrayList<ArrayList<String>> data = new ArrayList<>();
+            ArrayList<ClassAssignment> data = new ArrayList<>();
 
             //cycle through each row - a row is for one assignment
             for (Element assignmentRow : html.select("table.list").get(0)
                     .select("tr.listrowodd, tr.listroweven")) {
                 //create an arraylist for storing this row of data
-                ArrayList<String> dataRow = new ArrayList<>();
+                ClassAssignment assignment = new ClassAssignment();
 
                 //cycle through all the data for this one assignment
-                for (Element assignmentInfo : assignmentRow.getElementsByTag("td")) {
+                Elements columns = assignmentRow.getElementsByTag("td");
+                for (int x = 0; x < columns.size(); x++) {
                     //add the data to the arraylist
-                    dataRow.add(assignmentInfo.text());
+                    switch(x) {
+                        case 1:
+                            assignment.date = columns.get(x).text();
+                            break;
+                        case 5:
+                            String[] strs = columns.get(x).text().split("\\s+");
+                            assignment.category = strs[strs.length - 1];
+                            break;
+                        case 7:
+                            assignment.name = columns.get(x).text();
+                            break;
+                        case 16:
+                            assignment.points = columns.get(14).text() + " / " +
+                                    columns.get(x).text();
+                            break;
+                        case 17:
+                            assignment.grade = columns.get(x).text();
+                    }
                 }
 
                 //add the arraylist to the bigger arraylist
-                data.add(dataRow);
+                data.add(assignment);
             }
             //this nested for loop creates a 2 dimensional array of all the assignments, and all the
             //info about the assignments
