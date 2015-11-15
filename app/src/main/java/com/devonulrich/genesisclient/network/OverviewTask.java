@@ -3,16 +3,20 @@ package com.devonulrich.genesisclient.network;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.OverviewAdapter;
 import com.devonulrich.genesisclient.R;
 import com.devonulrich.genesisclient.data.SchoolClass;
+import com.devonulrich.genesisclient.data.cache.OverviewCache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>> {
+
+    private static final String LOG_TAG = OverviewTask.class.getSimpleName();
 
     private OverviewActivity activity;
 
@@ -24,11 +28,25 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
     protected ArrayList<SchoolClass> doInBackground(String... params) {
         String session = params[0];
         String id = params[1];
-        //get the overview page
-        ArrayList<SchoolClass> classData = GenesisHTTP.overview(session, id);
-        HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
-        addData(classData, classGrades);
 
+        ArrayList<SchoolClass> classData;
+        if(OverviewCache.exists(activity)) {
+            //if the class data is cached, then load the saved data
+            classData = OverviewCache.readData(activity);
+
+            Log.i(LOG_TAG, "Loaded overview data from cache");
+        } else {
+            //if it's not cached, then download the info from the internet
+            //get the overview page
+            classData = GenesisHTTP.overview(session, id);
+            HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
+            addData(classData, classGrades);
+
+            //save the downloaded info
+            OverviewCache.writeData(activity, classData);
+
+            Log.i(LOG_TAG, "Downloaded overview data from internet");
+        }
         return classData;
     }
 
