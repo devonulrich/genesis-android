@@ -1,7 +1,5 @@
 package com.devonulrich.genesisclient.network;
 
-import android.util.Log;
-
 import com.devonulrich.genesisclient.data.ClassAssignment;
 import com.devonulrich.genesisclient.data.SchoolClass;
 import com.devonulrich.genesisclient.data.login.LoginInfo;
@@ -16,23 +14,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GenesisHTTP {
+class GenesisHTTP {
 
-    public static final String USER_AGENT = "Mozilla/5.0";
+    private static final String USER_AGENT = "Mozilla/5.0";
 
-    public static final String LOGIN_PAGE_URL =
+    private static final String LOGIN_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?gohome=true";
-    public static final String LOGIN_POST_URL =
+    private static final String LOGIN_POST_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/j_security_check";
-    public static final String OVERVIEW_PAGE_URL =
+    private static final String OVERVIEW_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=" +
                     "studentdata&tab2=studentsummary&action=form&studentid=";
-    public static final String GRADEBOOK_PAGE_URL =
+    private static final String GRADEBOOK_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata" +
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
-    public static final String CLASS_PAGE_URL_1 =
+    private static final String CLASS_PAGE_URL_1 =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
-    public static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP2&courseAndSection=";
+    private static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP2&courseAndSection=";
 
     //returns the session ID
     public static String login(LoginInfo li) {
@@ -81,35 +79,25 @@ public class GenesisHTTP {
             //get the first one (the one for the current student ID)
             Element studentInfo = students.get(0);
 
+            //create an ArrayList for storing all info about all classes
             ArrayList<SchoolClass> classesTable = new ArrayList<>();
             //cycle through all rows in the schedule table
             for (Element classRow : studentInfo.select("table.list").get(2)
                     .select("tr.listrowodd, tr.listroweven")) {
                 SchoolClass sc = new SchoolClass();
-                //cycle through all table data for each school-class
-                //get all columns
+                //get all columns of the current row
                 Elements columns = classRow.getElementsByTag("td");
-                for (int x = 0; x < columns.size(); x++) {
-                    switch(x) {
-                        case 0:
-                            sc.period = columns.get(x).text();
-                            break;
-                        case 1:
-                            sc.name = columns.get(x).text();
-                            break;
-                        case 4:
-                            sc.room = columns.get(x).text();
-                            break;
-                        case 5:
-                            sc.teacher = columns.get(x).text();
-                            break;
-                    }
-                }
+                //if it doesn't have all the information we need, then skip it
+                // (so we don't get errors)
+                if (columns.size() <= 5) continue;
+                sc.period = columns.get(0).text();
+                sc.name = columns.get(1).text();
+                sc.room = columns.get(4).text();
+                sc.teacher = columns.get(5).text();
                 classesTable.add(sc);
             }
-            //this nested for loop creates a 2 dimensional array of all the classes, and all the
-            //info about the classes
 
+            //return the combined info about all of the classes
             return classesTable;
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,45 +155,30 @@ public class GenesisHTTP {
             //parse the document
             Document html = response.parse();
 
-            //create a 2D arraylist for storing all the rows of data
+            //create an ArrayList for storing all info about all assignments
             ArrayList<ClassAssignment> data = new ArrayList<>();
 
             //cycle through each row - a row is for one assignment
             for (Element assignmentRow : html.select("table.list").get(0)
                     .select("tr.listrowodd, tr.listroweven")) {
-                //create an arraylist for storing this row of data
                 ClassAssignment assignment = new ClassAssignment();
-
-                //cycle through all the data for this one assignment
+                // get all columns of the current row
                 Elements columns = assignmentRow.getElementsByTag("td");
-                for (int x = 0; x < columns.size(); x++) {
-                    //add the data to the arraylist
-                    switch(x) {
-                        case 1:
-                            assignment.date = columns.get(x).text();
-                            break;
-                        case 5:
-                            String[] strs = columns.get(x).text().split("\\s+");
-                            assignment.category = strs[strs.length - 1];
-                            break;
-                        case 7:
-                            assignment.name = columns.get(x).text();
-                            break;
-                        case 16:
-                            assignment.points = columns.get(14).text() + " / " +
-                                    columns.get(x).text();
-                            break;
-                        case 17:
-                            assignment.grade = columns.get(x).text();
-                    }
-                }
+                // if it doesn't have all of the information we need, then skip it
+                // (to avoid errors)
+                if (columns.size() <= 17) continue;
+                assignment.date = columns.get(1).text();
+                String[] categoryStrs = columns.get(5).text().split("\\s+");
+                assignment.category = categoryStrs[categoryStrs.length - 1];
+                assignment.name = columns.get(7).text();
+                assignment.points = columns.get(14).text() + " / " + columns.get(16).text();
+                assignment.grade = columns.get(17).text();
 
-                //add the arraylist to the bigger arraylist
+                //add the assignment info to the arraylist
                 data.add(assignment);
             }
-            //this nested for loop creates a 2 dimensional array of all the assignments, and all the
-            //info about the assignments
 
+            //return all collected info about all assignments for the class
             return data;
 
         } catch (Exception e) {

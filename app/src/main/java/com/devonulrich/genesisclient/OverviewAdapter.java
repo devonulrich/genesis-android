@@ -58,12 +58,12 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     public static class OverviewViewHolder extends RecyclerView.ViewHolder {
         //stores references to all items in the item layout
 
-        protected TextView period;
-        protected TextView schoolClass;
-        protected TextView grade;
-        protected TextView teacher;
-        protected TextView room;
-        protected TextView id;
+        TextView period;
+        TextView schoolClass;
+        TextView grade;
+        TextView teacher;
+        TextView room;
+        TextView id;
 
         public OverviewViewHolder(View v) {
             super(v);

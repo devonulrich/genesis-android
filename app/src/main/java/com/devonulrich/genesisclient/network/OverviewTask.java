@@ -15,8 +15,6 @@ import java.util.HashMap;
 public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>> {
 
     private OverviewActivity activity;
-    private String session;
-    private String id;
 
     public OverviewTask(OverviewActivity a) {
         activity = a;
@@ -24,9 +22,8 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     @Override
     protected ArrayList<SchoolClass> doInBackground(String... params) {
-        //save the session ID and student ID for later use
-        session = params[0];
-        id = params[1];
+        String session = params[0];
+        String id = params[1];
         //get the overview page
         ArrayList<SchoolClass> classData = GenesisHTTP.overview(session, id);
         HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
@@ -35,7 +32,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
         return classData;
     }
 
-    protected void addData(ArrayList<SchoolClass> table, HashMap<String, String> data) {
+    private void addData(ArrayList<SchoolClass> table, HashMap<String, String> data) {
         for (SchoolClass sc : table) {
             String classData = data.get(sc.name);
             if (classData != null) {

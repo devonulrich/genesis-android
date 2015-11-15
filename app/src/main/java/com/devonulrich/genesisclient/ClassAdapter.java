@@ -1,7 +1,6 @@
 package com.devonulrich.genesisclient;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +32,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     public void onBindViewHolder(ClassViewHolder viewHolder, int i) {
         ClassAssignment assignment = data.get(i);
 
-        //if we don't have all of the data, then stop trying to do anything
-        //if(assignmentInfo.size() <= 17) return;
-
         //set all of the parts of the layout to the given data
         viewHolder.date.setText(assignment.date);
         viewHolder.category.setText(assignment.category);
@@ -55,11 +51,11 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     public static class ClassViewHolder extends RecyclerView.ViewHolder {
         //stores references to all items in the class item layout
 
-        protected TextView name;
-        protected TextView grade;
-        protected TextView category;
-        protected TextView date;
-        protected TextView points;
+        TextView name;
+        TextView grade;
+        TextView category;
+        TextView date;
+        TextView points;
 
         public ClassViewHolder(View v) {
             super(v);

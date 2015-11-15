@@ -35,7 +35,7 @@ public class LoginStore {
         editor.apply();
     }
 
-    public static void reset(Context c) {
+    /*public static void reset(Context c) {
         SharedPreferences sp = c.getSharedPreferences(LOGIN_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 
@@ -45,5 +45,5 @@ public class LoginStore {
         editor.putString(ID_KEY, "");
 
         editor.apply();
-    }
+    }*/
 }

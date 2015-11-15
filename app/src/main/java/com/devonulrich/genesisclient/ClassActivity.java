@@ -16,13 +16,6 @@ import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 public class ClassActivity extends Activity {
 
-    private String period;
-    private String className;
-    private String teacher;
-    private String grade;
-    private String room;
-    private String classID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +24,12 @@ public class ClassActivity extends Activity {
         if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = this.getIntent().getExtras();
-        period = extras.getString(getString(R.string.id_class_period));
-        className = extras.getString(getString(R.string.id_class_name));
-        teacher = extras.getString(getString(R.string.id_class_teacher));
-        grade = extras.getString(getString(R.string.id_class_grade));
-        room = extras.getString(getString(R.string.id_class_room));
-        classID = extras.getString(getString(R.string.id_class_id));
+        String period = extras.getString(getString(R.string.id_class_period));
+        String className = extras.getString(getString(R.string.id_class_name));
+        String teacher = extras.getString(getString(R.string.id_class_teacher));
+        String grade = extras.getString(getString(R.string.id_class_grade));
+        String room = extras.getString(getString(R.string.id_class_room));
+        String classID = extras.getString(getString(R.string.id_class_id));
 
         this.setTitle(className);
 
@@ -53,7 +46,6 @@ public class ClassActivity extends Activity {
         if (session != null) {
             ClassTask ct = new ClassTask(this);
             ct.execute(session, id, classID);
-            Log.d("deovnulrich", id + " " + classID);
         } else {
             //if no session ID was given, then go to the launcher activity
             Intent i = new Intent(this, LauncherActivity.class);
