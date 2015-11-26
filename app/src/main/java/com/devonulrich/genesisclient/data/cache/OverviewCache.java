@@ -75,4 +75,9 @@ public class OverviewCache {
             return null;
         }
     }
+
+    public static boolean deleteData(Context c) {
+        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        return f.delete();
+    }
 }
