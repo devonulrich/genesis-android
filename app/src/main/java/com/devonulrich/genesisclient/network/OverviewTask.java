@@ -65,16 +65,22 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     protected void onPostExecute(ArrayList<SchoolClass> result) {
         final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
-        ((OverviewAdapter) recList.getAdapter()).clearData();
+        final OverviewAdapter adapter = (OverviewAdapter) recList.getAdapter();
         int delay = 0;
-        for (final SchoolClass sc : result) {
+        for (int x = 0; x < result.size(); x++) {
+            final SchoolClass sc = result.get(x);
+            final int index = x;
             //cycle through all class data sets
             Handler handler = new Handler();
             //add the data set to the view, but with a delay to create a nice animation
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((OverviewAdapter) recList.getAdapter()).addData(sc);
+                    if(adapter.dataSize() <= index) {
+                        adapter.addData(sc);
+                    } else {
+                        adapter.modifyData(index, sc);
+                    }
                 }
             }, delay);
             //increase the delay to make each data set appear after the one before it

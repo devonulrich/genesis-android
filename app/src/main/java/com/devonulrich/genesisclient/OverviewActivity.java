@@ -86,6 +86,7 @@ public class OverviewActivity extends Activity {
 
                 //remove the cache and redownload/load the data
                 OverviewCache.deleteData(this);
+                ((OverviewAdapter) recList.getAdapter()).clearData();
                 onStart();
                 return true;
             default:
