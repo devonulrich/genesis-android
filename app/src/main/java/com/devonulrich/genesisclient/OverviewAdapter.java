@@ -25,6 +25,11 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
         notifyItemInserted(getItemCount() - 1);
     }
 
+    public void clearData() {
+        data.clear();
+        notifyDataSetChanged();
+    }
+
     public int getItemCount() {
         return data.size();
     }

@@ -20,8 +20,11 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     private OverviewActivity activity;
 
-    public OverviewTask(OverviewActivity a) {
+    private boolean animate;
+
+    public OverviewTask(OverviewActivity a, boolean animate) {
         activity = a;
+        this.animate = animate;
     }
 
     @Override
@@ -62,6 +65,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     protected void onPostExecute(ArrayList<SchoolClass> result) {
         final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.recycler_view);
+        ((OverviewAdapter) recList.getAdapter()).clearData();
         int delay = 0;
         for (final SchoolClass sc : result) {
             //cycle through all class data sets
@@ -74,7 +78,9 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
                 }
             }, delay);
             //increase the delay to make each data set appear after the one before it
-            delay += 80;
+            if(animate) {
+                delay += 80;
+            }
         }
     }
 }

@@ -17,24 +17,12 @@ public class OverviewActivity extends Activity {
     private String session;
     private String id;
 
+    private boolean animate = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-
-        //get the session ID and student ID
-        Intent intent = getIntent();
-        session = intent.getStringExtra(getString(R.string.id_session_id));
-        id = intent.getStringExtra(getString(R.string.id_student_id));
-        if (session != null) {
-            //if the previous activity passed a session id, then try to get the overview info
-            OverviewTask ot = new OverviewTask(this);
-            ot.execute(session, id);
-        } else {
-            //if no session ID was given, then go to the launcher activity
-            Intent i = new Intent(this, LauncherActivity.class);
-            startActivity(i);
-        }
 
         //configure the RecyclerView
         RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
@@ -44,6 +32,35 @@ public class OverviewActivity extends Activity {
         recList.setLayoutManager(llm);
         recList.setAdapter(new OverviewAdapter());
         recList.setItemAnimator(new FadeInLeftAnimator());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //get the session ID and student ID
+        Intent intent = getIntent();
+        session = intent.getStringExtra(getString(R.string.id_session_id));
+        id = intent.getStringExtra(getString(R.string.id_student_id));
+        if (session != null) {
+            //if the previous activity passed a session id, then try to get the overview info
+            OverviewTask ot = new OverviewTask(this, animate);
+            ot.execute(session, id);
+        } else {
+            //if no session ID was given, then go to the launcher activity
+            Intent i = new Intent(this, LauncherActivity.class);
+            startActivity(i);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        //turn off the animation
+        animate = false;
+        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
+        recList.setItemAnimator(null);
     }
 
     @Override
