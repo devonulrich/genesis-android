@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.devonulrich.genesisclient.data.cache.OverviewCache;
+import com.devonulrich.genesisclient.data.cache.SessionCache;
 import com.devonulrich.genesisclient.network.OverviewTask;
 
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
@@ -50,12 +51,11 @@ public class OverviewActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        //get the session ID and student ID
-        Intent intent = getIntent();
-        session = intent.getStringExtra(getString(R.string.id_session_id));
-        id = intent.getStringExtra(getString(R.string.id_student_id));
-        if (session != null) {
+        if (SessionCache.exists(this)) {
             //if the previous activity passed a session id, then try to get the overview info
+            String[] ids = SessionCache.readData(this);
+            session = ids[0];
+            id = ids[1];
             OverviewTask ot = new OverviewTask(this, animate);
             ot.execute(session, id);
         } else {
@@ -122,10 +122,6 @@ public class OverviewActivity extends Activity {
         i.putExtra(getString(R.string.id_class_grade), grade);
         i.putExtra(getString(R.string.id_class_room), room);
         i.putExtra(getString(R.string.id_class_id), classID);
-
-        //add the session ID and student ID, and start the activity for the specific class
-        i.putExtra(getString(R.string.id_session_id), session);
-        i.putExtra(getString(R.string.id_student_id), id);
         startActivity(i);
     }
 }

@@ -8,6 +8,7 @@ import com.devonulrich.genesisclient.LauncherActivity;
 import com.devonulrich.genesisclient.LoginActivity;
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.R;
+import com.devonulrich.genesisclient.data.cache.SessionCache;
 import com.devonulrich.genesisclient.data.login.LoginInfo;
 
 public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
@@ -37,10 +38,10 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
 
             if (result != null) {
                 //successfully logged in from LoginActivity
+                //store the ids in a cache file
+                SessionCache.writeData(activity, result, studentId);
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
-                i.putExtra(activity.getString(R.string.id_session_id), result);
-                i.putExtra(activity.getString(R.string.id_student_id), studentId);
                 activity.startActivity(i);
             } else {
                 //did not log in from LoginActivity
@@ -52,10 +53,10 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
 
             if (result != null) {
                 //successfully logged in from LauncherActivity
+                //store the ids in a cache file
+                SessionCache.writeData(activity, result, studentId);
                 //go to the overview activity
                 Intent i = new Intent(activity, OverviewActivity.class);
-                i.putExtra(activity.getString(R.string.id_session_id), result);
-                i.putExtra(activity.getString(R.string.id_student_id), studentId);
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
             } else {

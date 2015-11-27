@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.devonulrich.genesisclient.data.cache.SessionCache;
 import com.devonulrich.genesisclient.network.ClassTask;
 
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
@@ -39,11 +40,10 @@ public class ClassActivity extends Activity {
         ((TextView) this.findViewById(R.id.class_teacher)).setText(teacher);
         ((TextView) this.findViewById(R.id.class_room)).setText(room);
 
-
-        String session = extras.getString(getString(R.string.id_session_id));
-        String id = extras.getString(getString(R.string.id_student_id));
-
-        if (session != null) {
+        if (SessionCache.exists(this)) {
+            String[] ids = SessionCache.readData(this);
+            String session = ids[0];
+            String id = ids[1];
             ClassTask ct = new ClassTask(this);
             ct.execute(session, id, classID);
         } else {
