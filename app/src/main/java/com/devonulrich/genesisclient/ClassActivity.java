@@ -21,9 +21,11 @@ public class ClassActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
+        //make a back arrow visible
         ActionBar ab = getActionBar();
         if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
 
+        //get the info that will be added to the UI
         Bundle extras = this.getIntent().getExtras();
         String period = extras.getString(getString(R.string.id_class_period));
         String className = extras.getString(getString(R.string.id_class_name));
@@ -32,6 +34,7 @@ public class ClassActivity extends Activity {
         String room = extras.getString(getString(R.string.id_class_room));
         String classID = extras.getString(getString(R.string.id_class_id));
 
+        //put the data into the UI
         this.setTitle(className);
 
         ((TextView) this.findViewById(R.id.class_period)).setText(getString(
@@ -41,13 +44,14 @@ public class ClassActivity extends Activity {
         ((TextView) this.findViewById(R.id.class_room)).setText(room);
 
         if (SessionCache.exists(this)) {
+            //if a session was found in the cache, then use it
             String[] ids = SessionCache.readData(this);
             String session = ids[0];
             String id = ids[1];
             ClassTask ct = new ClassTask(this);
             ct.execute(session, id, classID);
         } else {
-            //if no session ID was given, then go to the launcher activity
+            //if no session ID was found, then go to the launcher activity
             Intent i = new Intent(this, LauncherActivity.class);
             startActivity(i);
         }
@@ -65,6 +69,8 @@ public class ClassActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            //if the item selected is the back arrow key, then finish the activity
+            //and go back to the OverviewActivity
             finish();
         }
         return true;

@@ -26,24 +26,26 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     }
 
     public void modifyData(int index, SchoolClass newData) {
+        //modify the data
         data.set(index, newData);
+        //tell the adapter that an item was changed
         notifyItemChanged(index);
     }
 
     public void clearData() {
+        //clear the data set
         data.clear();
+        //tell the adapter that it changed
         notifyDataSetChanged();
     }
 
-    public int dataSize() {
-        return data.size();
-    }
-
     public int getItemCount() {
+        //return the size of the data array - how many SchoolClass objects are present
         return data.size();
     }
 
     public void onBindViewHolder(OverviewViewHolder viewHolder, int i) {
+        //called when data must be added to a view
         SchoolClass sc = data.get(i);
 
         //special case : if the class is "Introduction to Engineering", then shorten it, since
@@ -61,6 +63,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.Overvi
     }
 
     public OverviewViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        //called when a view must be created
         //inflate the view
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.overview_item, viewGroup, false);

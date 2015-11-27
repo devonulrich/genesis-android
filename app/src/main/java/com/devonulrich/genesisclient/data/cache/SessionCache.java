@@ -1,6 +1,7 @@
 package com.devonulrich.genesisclient.data.cache;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.File;

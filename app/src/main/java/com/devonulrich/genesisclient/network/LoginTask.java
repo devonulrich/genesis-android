@@ -20,10 +20,6 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
         activity = a;
     }
 
-    protected void onPreExecute() {
-        //Toast.makeText(activity, "Logging in...", Toast.LENGTH_SHORT).show();
-    }
-
     protected String doInBackground(LoginInfo... info) {
         //save the student's ID for later use
         studentId = info[0].id;

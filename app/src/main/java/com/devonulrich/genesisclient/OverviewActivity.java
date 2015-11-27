@@ -20,10 +20,8 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class OverviewActivity extends Activity {
 
-    private String session;
-    private String id;
-
-    private boolean animate = true;
+    String session;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,7 @@ public class OverviewActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //add the "refresh" option into the options menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.overview_menu, menu);
         return true;
@@ -49,46 +48,40 @@ public class OverviewActivity extends Activity {
 
     @Override
     protected void onStart() {
+        //called every time the activity is put in the foreground
         super.onStart();
 
         if (SessionCache.exists(this)) {
-            //if the previous activity passed a session id, then try to get the overview info
+            //if a session exists in the cache, then use it
             String[] ids = SessionCache.readData(this);
+            //we don't need to worry about this null warning, since we already know
+            //that it won't be null
             session = ids[0];
             id = ids[1];
-            OverviewTask ot = new OverviewTask(this, animate);
+            OverviewTask ot = new OverviewTask(this);
             ot.execute(session, id);
         } else {
-            //if no session ID was given, then go to the launcher activity
+            //if no session was found in the cache, then go to the LauncherActivity to either
+            //manually log in, or to ask the user for login information
             Intent i = new Intent(this, LauncherActivity.class);
             startActivity(i);
         }
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        //turn off the animation
-        animate = false;
-        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
-        recList.setItemAnimator(null);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            //if the refresh option was selected
             case R.id.refresh:
-                //turn on animation
-                animate = true;
+                //remove the data shown in the UI
                 RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
-                recList.setItemAnimator(new SlideInLeftAnimator());
-
-                //remove the cache and redownload/load the data
-                OverviewCache.deleteData(this);
                 ((OverviewAdapter) recList.getAdapter()).clearData();
+                //remove the data saved in the cache
+                OverviewCache.deleteData(this);
+                //call onStart() to refresh the data
                 onStart();
                 return true;
+            //if any other option was selected (should never happen)
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -104,6 +97,9 @@ public class OverviewActivity extends Activity {
     }
 
     public void onCardClick(View view) {
+        //when one of the class cards was clicked, meaning that the user wants to go to that
+        //specific ClassActivity
+
         //get all data from the card which was clicked
         String period = ((TextView) view.findViewById(R.id.card_period)).getText().toString();
         String className = ((TextView) view.findViewById(R.id.card_class)).getText().toString();

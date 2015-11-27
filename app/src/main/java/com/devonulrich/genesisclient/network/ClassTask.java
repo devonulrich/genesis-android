@@ -48,7 +48,7 @@ public class ClassTask extends AsyncTask<String, Void, ArrayList<ClassAssignment
     @Override
     protected void onPostExecute(ArrayList<ClassAssignment> result) {
         final RecyclerView recList = (RecyclerView) activity.findViewById(R.id.class_recyclerview);
-        int delay = 200;
+        int delay = 0;
         for (final ClassAssignment assignment : result) {
             //cycle through all class data sets
             Handler handler = new Handler();

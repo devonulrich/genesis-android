@@ -20,11 +20,8 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     private OverviewActivity activity;
 
-    private boolean animate;
-
-    public OverviewTask(OverviewActivity a, boolean animate) {
+    public OverviewTask(OverviewActivity a) {
         activity = a;
-        this.animate = animate;
     }
 
     @Override
@@ -40,9 +37,11 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
             Log.i(LOG_TAG, "Loaded overview data from cache");
         } else {
             //if it's not cached, then download the info from the internet
-            //get the overview page
+            //get the overview data
             classData = GenesisHTTP.overview(session, id);
+            //get the grades of each class
             HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
+            //combine the two sets of data
             addData(classData, classGrades);
 
             //save the downloaded info
@@ -55,8 +54,11 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
 
     private void addData(ArrayList<SchoolClass> table, HashMap<String, String> data) {
         for (SchoolClass sc : table) {
+            //loop through every SchoolClass object
             String classData = data.get(sc.name);
+            //get the extra data for that class
             if (classData != null) {
+                //if it's a valid class name, then add the extra data into the SchoolClass object
                 sc.grade = classData.split("---")[0];
                 sc.id = classData.split("---")[1];
             }
@@ -68,25 +70,30 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
         final OverviewAdapter adapter = (OverviewAdapter) recList.getAdapter();
         int delay = 0;
         for (int x = 0; x < result.size(); x++) {
+            //loop through every SchoolClass object
+
+            //get some variables which are used in the inner class, so they must be final
             final SchoolClass sc = result.get(x);
             final int index = x;
-            //cycle through all class data sets
+
             Handler handler = new Handler();
             //add the data set to the view, but with a delay to create a nice animation
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(adapter.dataSize() <= index) {
+                    if(adapter.getItemCount() <= index) {
+                        //if there is no data for this index - there's no card for this specific
+                        //class yet, then add the data
                         adapter.addData(sc);
                     } else {
+                        //if there's already data for this index - there's a card for this specific
+                        //class, then modify the data instead of adding new data
                         adapter.modifyData(index, sc);
                     }
                 }
             }, delay);
             //increase the delay to make each data set appear after the one before it
-            if(animate) {
-                delay += 80;
-            }
+            delay += 80;
         }
     }
 }
