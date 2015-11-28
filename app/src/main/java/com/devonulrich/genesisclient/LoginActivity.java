@@ -25,13 +25,13 @@ public class LoginActivity extends Activity {
         //get the saved login info
         LoginInfo li = LoginStore.getLoginInfo(this);
 
-        //mark the checkbox to true if the user wants to automatically log in
-        CheckBox autoLoginCB = (CheckBox) findViewById(R.id.autoLogin);
-        autoLoginCB.setChecked(li.autoLogin);
-
         //put the saved email in the email EditText
         EditText emailET = (EditText) findViewById(R.id.email);
         emailET.setText(li.email);
+
+        //put the saved password in the password EditText
+        EditText passET = (EditText) findViewById(R.id.pass);
+        passET.setText(li.pass);
 
         //put the saved student ID in the id EditText
         EditText idET = (EditText) findViewById(R.id.id);
@@ -49,15 +49,14 @@ public class LoginActivity extends Activity {
         super.onStop();
 
         //save all of the things the user put in
-        CheckBox autoLoginCB = (CheckBox) findViewById(R.id.autoLogin);
-        //only automatically log in if a) the user selected it, and b) if their credentials worked
-        boolean autoLogin = autoLoginCB.isChecked() && isLoggedIn;
+        //only automatically log in if their credentials worked
+        boolean autoLogin = isLoggedIn;
 
         EditText emailET = (EditText) findViewById(R.id.email);
         String email = emailET.getText().toString();
 
         EditText passET = (EditText) findViewById(R.id.pass);
-        String pass = autoLogin ? passET.getText().toString() : "";
+        String pass = passET.getText().toString();
 
         EditText idET = (EditText) findViewById(R.id.id);
         String id = idET.getText().toString();
@@ -89,7 +88,7 @@ public class LoginActivity extends Activity {
 
         //log in with the user's info
         LoginTask lt = new LoginTask(this);
-        LoginInfo li = new LoginInfo(email, pass, id, false);
+        LoginInfo li = new LoginInfo(email, pass, id, true);
         lt.execute(li);
     }
 

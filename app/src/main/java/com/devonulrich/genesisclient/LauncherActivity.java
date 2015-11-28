@@ -18,7 +18,7 @@ public class LauncherActivity extends Activity {
         //get the saved login credentials
         LoginInfo li = LoginStore.getLoginInfo(this);
         if (!li.autoLogin) {
-            //if the user chose not to log in automatically, then go to the login activity
+            //if we shouldn't automatically log in, then go to LoginActivity
             Intent i = new Intent(this, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(i);

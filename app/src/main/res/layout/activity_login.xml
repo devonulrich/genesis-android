@@ -73,11 +73,4 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:id="@+id/error_label" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_automatic_label"
-        android:layout_marginTop="10dp"
-        android:id="@+id/autoLogin" />
 </LinearLayout>

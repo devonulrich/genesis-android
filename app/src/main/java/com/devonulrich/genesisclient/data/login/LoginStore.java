@@ -29,7 +29,7 @@ public class LoginStore {
 
         editor.putBoolean(AUTO_LOGIN_KEY, li.autoLogin);
         editor.putString(EMAIL_KEY, li.email);
-        editor.putString(PASS_KEY, li.autoLogin ? li.pass : "");
+        editor.putString(PASS_KEY, li.pass);
         editor.putString(ID_KEY, li.id);
 
         editor.apply();
