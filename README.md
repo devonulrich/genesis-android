@@ -1,5 +1,5 @@
 # genesis-android
-A genesis Parent Portal client app for Android
+A Genesis Parent Portal client app for Android
 
 This is in a very early state, and is nowhere near complete. There 
 are many features I want to add and bugs I need to fix before I
