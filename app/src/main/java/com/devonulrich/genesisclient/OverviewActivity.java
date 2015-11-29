@@ -20,6 +20,13 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class OverviewActivity extends Activity {
 
+    public static final String EXTRA_CLASS_PERIOD = "genesisclient.extra_class_per";
+    public static final String EXTRA_CLASS_NAME = "genesisclient.extra_class_name";
+    public static final String EXTRA_CLASS_TEACHER = "genesisclient.extra_class_teacher";
+    public static final String EXTRA_CLASS_GRADE = "genesisclient.extra_class_grade";
+    public static final String EXTRA_CLASS_ROOM = "genesisclient.extra_class_room";
+    public static final String EXTRA_CLASS_ID = "genesisclient.extra_class_id";
+
     String session;
     String id;
 
@@ -112,12 +119,12 @@ public class OverviewActivity extends Activity {
 
         //create a new intent, and put all of the necessary class info in
         Intent i = new Intent(this, ClassActivity.class);
-        i.putExtra(getString(R.string.id_class_period), period);
-        i.putExtra(getString(R.string.id_class_name), className);
-        i.putExtra(getString(R.string.id_class_teacher), teacher);
-        i.putExtra(getString(R.string.id_class_grade), grade);
-        i.putExtra(getString(R.string.id_class_room), room);
-        i.putExtra(getString(R.string.id_class_id), classID);
+        i.putExtra(EXTRA_CLASS_PERIOD, period);
+        i.putExtra(EXTRA_CLASS_NAME, className);
+        i.putExtra(EXTRA_CLASS_TEACHER, teacher);
+        i.putExtra(EXTRA_CLASS_GRADE, grade);
+        i.putExtra(EXTRA_CLASS_ROOM, room);
+        i.putExtra(EXTRA_CLASS_ID, classID);
         startActivity(i);
     }
 }

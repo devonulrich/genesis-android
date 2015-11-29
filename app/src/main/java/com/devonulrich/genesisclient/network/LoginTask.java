@@ -59,7 +59,7 @@ public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
                 //did not log in from LauncherActivity
                 //go to LoginActivity, and show the error text
                 Intent i = new Intent(activity, LoginActivity.class);
-                i.putExtra(activity.getString(R.string.id_login_show_error), true);
+                i.putExtra(LoginActivity.EXTRA_LOGIN_ERROR, true);
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(i);
             }

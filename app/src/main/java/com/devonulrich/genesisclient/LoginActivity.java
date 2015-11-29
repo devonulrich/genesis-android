@@ -15,6 +15,8 @@ import com.devonulrich.genesisclient.network.LoginTask;
 
 public class LoginActivity extends Activity {
 
+    public static String EXTRA_LOGIN_ERROR = "genesisclient.extra_login_error";
+
     private boolean isLoggedIn = false;
 
     @Override
@@ -38,7 +40,7 @@ public class LoginActivity extends Activity {
         idET.setText(li.id);
 
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(getString(R.string.id_login_show_error), false)) {
+        if (intent.getBooleanExtra(EXTRA_LOGIN_ERROR, false)) {
             //if this activity is supposed to show an error, then show it
             setErrorVisibility(true);
         }

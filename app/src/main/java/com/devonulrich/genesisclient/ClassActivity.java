@@ -27,12 +27,12 @@ public class ClassActivity extends Activity {
 
         //get the info that will be added to the UI
         Bundle extras = this.getIntent().getExtras();
-        String period = extras.getString(getString(R.string.id_class_period));
-        String className = extras.getString(getString(R.string.id_class_name));
-        String teacher = extras.getString(getString(R.string.id_class_teacher));
-        String grade = extras.getString(getString(R.string.id_class_grade));
-        String room = extras.getString(getString(R.string.id_class_room));
-        String classID = extras.getString(getString(R.string.id_class_id));
+        String period = extras.getString(OverviewActivity.EXTRA_CLASS_PERIOD);
+        String className = extras.getString(OverviewActivity.EXTRA_CLASS_NAME);
+        String teacher = extras.getString(OverviewActivity.EXTRA_CLASS_TEACHER);
+        String grade = extras.getString(OverviewActivity.EXTRA_CLASS_GRADE);
+        String room = extras.getString(OverviewActivity.EXTRA_CLASS_ROOM);
+        String classID = extras.getString(OverviewActivity.EXTRA_CLASS_ID);
 
         //put the data into the UI
         this.setTitle(className);
