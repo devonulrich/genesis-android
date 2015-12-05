@@ -18,7 +18,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/class_card_grade"
             android:layout_alignParentTop="true"
-            android:text="Secret Life of Bees Essay"
+            android:text="@string/sample_assignment_name"
             android:textSize="20sp"
             android:id="@+id/class_card_name" />
 
@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="88%"
+            android:text="@string/sample_assignment_grade"
             android:textSize="20sp"
             android:id="@+id/class_card_grade" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/class_card_name"
-            android:text="Test"
+            android:text="@string/sample_assignment_category"
             android:id="@+id/class_card_category" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_toEndOf="@id/class_card_category"
             android:layout_below="@id/class_card_name"
             android:layout_marginStart="10dp"
-            android:text="9/3/2015"
+            android:text="@string/sample_assignment_date"
             android:id="@+id/class_card_date" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/class_card_date"
-            android:text="88 / 100"
+            android:text="@string/sample_assignment_points"
             android:gravity="center"
             android:id="@+id/class_card_points" />
     </RelativeLayout>

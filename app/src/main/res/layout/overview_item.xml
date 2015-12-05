@@ -22,7 +22,7 @@
             android:layout_marginEnd="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:text="1"
+            android:text="@string/sample_class_period"
             android:textSize="40sp"
             android:id="@+id/card_period" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/card_period"
-            android:text="Introduction to Engineering"
+            android:text="@string/sample_class_name"
             android:textSize="20sp"
             android:id="@+id/card_class" />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:text="100%"
+            android:text="@string/sample_class_grade"
             android:textSize="20sp"
             android:id="@+id/card_grade" />
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/card_period"
             android:layout_toEndOf="@+id/card_period"
-            android:text="Ms. Milewska"
+            android:text="@string/sample_class_teacher"
             android:id="@+id/card_teacher" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/card_period"
             android:layout_alignParentEnd="true"
-            android:text="A2"
+            android:text="@string/sample_class_period"
             android:id="@+id/card_room" />
 
         <!--not actually part of the layout - simply used for storing the ID-->
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="1112:1"
+            android:text="@string/sample_class_id"
             android:id="@+id/card_id" />
 
     </RelativeLayout>

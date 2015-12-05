@@ -1,6 +1,8 @@
 <resources>
+    <!--General App Strings-->
     <string name="app_name">Genesis Client</string>
 
+    <!--LoginActivity Strings-->
     <string name="login_title">Login</string>
     <string name="login_email_label">Genesis Username</string>
     <string name="login_pass_label">Password</string>
@@ -8,9 +10,24 @@
     <string name="login_button_label">Login</string>
     <string name="login_error_label">Invalid user name or password. Please try again.</string>
 
+    <!--OverviewActivity Strings-->
     <string name="overview_title">Overview</string>
+    <string name="overview_refresh">Refresh</string>
 
+    <!--ClassActivity Strings-->
     <string name="class_title">ClassActivity</string>
-
     <string name="class_period">Period %1$s</string>
+
+    <!--Sample Strings used in previews in the IDE-->
+    <string name="sample_class_period">1</string>
+    <string name="sample_class_name">Intro to Engineering</string>
+    <string name="sample_class_grade">100.00%</string>
+    <string name="sample_class_teacher">Milewska, Anna</string>
+    <string name="sample_class_room">A2</string>
+    <string name="sample_class_id">1112:1</string>
+    <string name="sample_assignment_name">Secret Life of Bees Essay</string>
+    <string name="sample_assignment_grade">88%</string>
+    <string name="sample_assignment_category">Test</string>
+    <string name="sample_assignment_date">9/3/2015</string>
+    <string name="sample_assignment_points">88 / 100</string>
 </resources>
