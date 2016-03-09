@@ -30,7 +30,7 @@ class GenesisHTTP {
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
     private static final String CLASS_PAGE_URL_1 =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
-    private static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP2&courseAndSection=";
+    private static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP3&courseAndSection=";
 
     //returns the session ID
     public static String login(LoginInfo li) {
