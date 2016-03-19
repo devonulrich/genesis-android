@@ -20,7 +20,7 @@ public class OverviewCache {
     //saves the list of class info into the cache
     public static void writeData(Context c, ArrayList<SchoolClass> data) {
         try {
-            File f = new File(c.getExternalCacheDir(), FILE_NAME);
+            File f = new File(c.getCacheDir(), FILE_NAME);
             FileWriter fw = new FileWriter(f);
             fw.append(String.valueOf(System.currentTimeMillis()));
             fw.append("\n");
@@ -36,7 +36,7 @@ public class OverviewCache {
 
     //returns true if there is a suitable cache, and false if there isn't
     public static boolean exists(Context c) {
-        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        File f = new File(c.getCacheDir(), FILE_NAME);
         if(!f.exists()) return false;
 
         try {
@@ -54,7 +54,7 @@ public class OverviewCache {
 
     //reads and returns data from the cache (or null if there is no suitable cache)
     public static ArrayList<SchoolClass> readData(Context c) {
-        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        File f = new File(c.getCacheDir(), FILE_NAME);
         //if there is no suitable file, then return null
         if(!exists(c)) return null;
 
@@ -77,7 +77,7 @@ public class OverviewCache {
     }
 
     public static boolean deleteData(Context c) {
-        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        File f = new File(c.getCacheDir(), FILE_NAME);
         return f.delete();
     }
 }

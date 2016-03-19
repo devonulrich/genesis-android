@@ -18,7 +18,7 @@ public class SessionCache {
 
     public static void writeData(Context c, String sessionID, String studentID) {
         try {
-            File f = new File(c.getExternalCacheDir(), FILE_NAME);
+            File f = new File(c.getCacheDir(), FILE_NAME);
             FileWriter fw = new FileWriter(f);
             fw.append(String.valueOf(System.currentTimeMillis()));
             fw.append("\n");
@@ -34,7 +34,7 @@ public class SessionCache {
 
     //returns true if there is a suitable cache, and false if there isn't
     public static boolean exists(Context c) {
-        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        File f = new File(c.getCacheDir(), FILE_NAME);
         if(!f.exists()) return false;
 
         try {
@@ -52,7 +52,7 @@ public class SessionCache {
 
     //reads and returns data from the cache (or null if there is no suitable cache)
     public static String[] readData(Context c) {
-        File f = new File(c.getExternalCacheDir(), FILE_NAME);
+        File f = new File(c.getCacheDir(), FILE_NAME);
         //if there is no suitable file, then return null
         if(!exists(c)) return null;
 
