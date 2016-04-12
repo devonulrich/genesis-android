@@ -1,5 +1,7 @@
 package com.devonulrich.genesisclient.network;
 
+import android.util.Log;
+
 import com.devonulrich.genesisclient.data.ClassAssignment;
 import com.devonulrich.genesisclient.data.SchoolClass;
 import com.devonulrich.genesisclient.data.login.LoginInfo;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-class GenesisHTTP {
+public class GenesisHTTP {
 
     private static final String USER_AGENT = "Mozilla/5.0";
 
@@ -29,10 +31,11 @@ class GenesisHTTP {
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata" +
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
     private static final String CLASS_PAGE_URL_1 =
-            "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=";
-    private static final String CLASS_PAGE_URL_2 = "&action=form&dateRange=MP3&courseAndSection=";
+            "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=";
+    private static final String CLASS_PAGE_URL_2 = "&action=form&courseCode=";
+    private static final String CLASS_PAGE_URL_3 = "&courseSection=";
 
-    //returns the session ID
+    //returns the session ID, or null if it failed
     public static String login(LoginInfo li) {
         try {
             //load the login page, and get the cookie
@@ -143,7 +146,8 @@ class GenesisHTTP {
     }
 
     public static ArrayList<ClassAssignment> classPage(String session, String id, String classID) {
-        String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + classID;
+        String[] parts = classID.split(":");
+        String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + parts[0] + CLASS_PAGE_URL_3 + parts[1];
         try {
             //get the page
             Connection page = Jsoup.connect(fullURL);
@@ -174,6 +178,10 @@ class GenesisHTTP {
                 assignment.points = columns.get(14).text() + " / " + columns.get(16).text();
                 assignment.grade = columns.get(17).text();
 
+                for(int x = 0; x < columns.size(); x++) {
+                    Log.i(GenesisHTTP.class.getSimpleName(), x + ": " + columns.get(x).text());
+                }
+
                 //add the assignment info to the arraylist
                 data.add(assignment);
             }
@@ -182,6 +190,7 @@ class GenesisHTTP {
             return data;
 
         } catch (Exception e) {
+            Log.e(GenesisHTTP.class.getSimpleName(), e.getMessage());
             e.printStackTrace();
             return null;
         }
