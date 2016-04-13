@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.devonulrich.genesisclient.data.cache.OverviewCache;
 import com.devonulrich.genesisclient.data.cache.SessionCache;
+import com.devonulrich.genesisclient.network.GenesisHTTP;
+import com.devonulrich.genesisclient.network.MPTask;
 import com.devonulrich.genesisclient.network.OverviewTask;
 
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
@@ -29,6 +32,8 @@ public class OverviewActivity extends Activity {
 
     String session;
     String id;
+
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +52,49 @@ public class OverviewActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //add the "refresh" option into the options menu
+        //add the options menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.overview_menu, menu);
+
+        //set the title for the marking period
+        MPTask mpt = new MPTask(this);
+        mpt.execute(session, id);
+
+        this.menu = menu;
         return true;
+    }
+
+    public void cycleMPOption() {
+        MenuItem mi = menu.findItem(R.id.mp);
+        String initialText = mi.getTitle().toString();
+
+        switch(initialText) {
+            case "MP1":
+                setMPOption("MP2");
+                break;
+            case "MP2":
+                setMPOption("MP3");
+                break;
+            case "MP3":
+                setMPOption("MP4");
+                break;
+            case "MP4":
+                setMPOption("MP1");
+                break;
+        }
+
+        //remove all the cards
+        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
+        ((OverviewAdapter) recList.getAdapter()).clearData();
+        //delete the cache, so the data must be redownloaded
+        OverviewCache.deleteData(this);
+        //download the data
+        OverviewTask ot = new OverviewTask(this);
+        ot.execute(session, id, mi.getTitle().toString());
+    }
+
+    public void setMPOption(String str) {
+        menu.findItem(R.id.mp).setTitle(str);
     }
 
     @Override
@@ -88,6 +132,9 @@ public class OverviewActivity extends Activity {
                 //call onStart() to refresh the data
                 onStart();
                 return true;
+            case R.id.mp:
+                //cycle through the 4 marking periods
+                cycleMPOption();
             //if any other option was selected (should never happen)
             default:
                 return super.onOptionsItemSelected(item);

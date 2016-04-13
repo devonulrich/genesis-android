@@ -13,7 +13,7 @@ public class SessionCache {
     private static final String FILE_NAME = "session";
 
     //in milliseconds, how old the file can be to be usable at maximum
-    //in this case, it's 1000 ms * 60 s * 60 m
+    //in this case, it's 1000 ms * 60 s * 60 m, or 1 hour
     private static final long MAX_TIME = 3600000;
 
     public static void writeData(Context c, String sessionID, String studentID) {
@@ -41,7 +41,7 @@ public class SessionCache {
             BufferedReader br = new BufferedReader(new FileReader(f));
             long time = Long.parseLong(br.readLine());
 
-            //return true if the cached file is less than 60 seconds old
+            //return true if the cached file is less than 60 minutes old
             // (if the current time is less than 60 seconds after the file was created)
             return System.currentTimeMillis() < time + MAX_TIME;
         } catch(Exception e) {

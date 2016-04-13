@@ -27,9 +27,10 @@ public class GenesisHTTP {
     private static final String OVERVIEW_PAGE_URL =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=" +
                     "studentdata&tab2=studentsummary&action=form&studentid=";
-    private static final String GRADEBOOK_PAGE_URL =
+    private static final String GRADEBOOK_PAGE_URL_1 =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata" +
                     "&tab2=gradebook&tab3=weeklysummary&action=form&studentid=";
+    private static final String GRADEBOOK_PAGE_URL_2 = "&mpToView=";
     private static final String CLASS_PAGE_URL_1 =
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=";
     private static final String CLASS_PAGE_URL_2 = "&action=form&courseCode=";
@@ -108,10 +109,11 @@ public class GenesisHTTP {
         }
     }
 
-    public static HashMap<String, String> gradebook(String session, String id) {
+    public static HashMap<String, String> gradebook(String session, String id, String mp) {
         try {
             //get the page with the given student ID and session ID
-            Connection page = Jsoup.connect(GRADEBOOK_PAGE_URL + id);
+            String fullURL = GRADEBOOK_PAGE_URL_1 + id + GRADEBOOK_PAGE_URL_2 + mp;
+            Connection page = Jsoup.connect(fullURL);
             page.userAgent(USER_AGENT);
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
@@ -190,7 +192,26 @@ public class GenesisHTTP {
             return data;
 
         } catch (Exception e) {
-            Log.e(GenesisHTTP.class.getSimpleName(), e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String markingPeriod(String session, String id) {
+        try {
+            //get the page with the given student ID and session ID
+            Connection page = Jsoup.connect(GRADEBOOK_PAGE_URL_1 + id);
+            page.userAgent(USER_AGENT);
+            page.followRedirects(true);
+            page.cookie("JSESSIONID", session);
+            Connection.Response response = page.execute();
+
+            //parse the document
+            Document html = response.parse();
+
+            Element e = html.select("option[selected]").get(1);
+            return e.text();
+        } catch(Exception e) {
             e.printStackTrace();
             return null;
         }

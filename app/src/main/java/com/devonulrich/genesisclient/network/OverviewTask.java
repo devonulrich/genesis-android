@@ -28,6 +28,8 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
     protected ArrayList<SchoolClass> doInBackground(String... params) {
         String session = params[0];
         String id = params[1];
+        String mp = "";
+        if(params.length > 2) mp = params[2];
 
         ArrayList<SchoolClass> classData;
         if(OverviewCache.exists(activity)) {
@@ -40,7 +42,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
             //get the overview data
             classData = GenesisHTTP.overview(session, id);
             //get the grades of each class
-            HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id);
+            HashMap<String, String> classGrades = GenesisHTTP.gradebook(session, id, mp);
             //combine the two sets of data
             addData(classData, classGrades);
 
