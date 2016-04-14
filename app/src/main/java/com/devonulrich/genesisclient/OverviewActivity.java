@@ -81,18 +81,15 @@ public class OverviewActivity extends Activity {
                 break;
         }
 
-        //remove all the cards
-        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
-        ((OverviewAdapter) recList.getAdapter()).clearData();
-        //delete the cache, so the data must be redownloaded
-        OverviewCache.deleteData(this);
-        //download the data
-        OverviewTask ot = new OverviewTask(this);
-        ot.execute(session, id, mi.getTitle().toString());
+        refresh();
     }
 
     public void setMPOption(String str) {
         menu.findItem(R.id.mp).setTitle(str);
+    }
+
+    public String getMPOption() {
+        return menu.findItem(R.id.mp).getTitle().toString();
     }
 
     @Override
@@ -107,8 +104,14 @@ public class OverviewActivity extends Activity {
             //that it won't be null
             session = ids[0];
             id = ids[1];
-            OverviewTask ot = new OverviewTask(this);
-            ot.execute(session, id);
+            if(menu == null) {
+                //if the menu hasn't started up yet, then let the task select the current mp
+                OverviewTask ot = new OverviewTask(this);
+                ot.execute(session, id);
+            } else {
+                //if the menu exists, then use the currently selected mp by the user
+                refresh();
+            }
         } else {
             //if no session was found in the cache, then go to the LauncherActivity to either
             //manually log in, or to ask the user for login information
@@ -122,13 +125,7 @@ public class OverviewActivity extends Activity {
         switch(item.getItemId()) {
             //if the refresh option was selected
             case R.id.refresh:
-                //remove the data shown in the UI
-                RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
-                ((OverviewAdapter) recList.getAdapter()).clearData();
-                //remove the data saved in the cache
-                OverviewCache.deleteData(this);
-                //call onStart() to refresh the data
-                onStart();
+                refresh();
                 return true;
             case R.id.mp:
                 //cycle through the 4 marking periods
@@ -137,6 +134,17 @@ public class OverviewActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void refresh() {
+        //remove all the cards
+        RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
+        ((OverviewAdapter) recList.getAdapter()).clearData();
+        //delete the cache, so the data must be redownloaded
+        OverviewCache.deleteData(this);
+        //download the data
+        OverviewTask ot = new OverviewTask(this);
+        ot.execute(session, id, getMPOption());
     }
 
     @Override

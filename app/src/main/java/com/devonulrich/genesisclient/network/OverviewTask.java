@@ -28,8 +28,9 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
     protected ArrayList<SchoolClass> doInBackground(String... params) {
         String session = params[0];
         String id = params[1];
-        String mp = "";
+        String mp;
         if(params.length > 2) mp = params[2];
+        else mp = GenesisHTTP.markingPeriod(session, id);
 
         ArrayList<SchoolClass> classData;
         if(OverviewCache.exists(activity)) {
