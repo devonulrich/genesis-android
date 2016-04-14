@@ -30,8 +30,11 @@ public class OverviewActivity extends Activity {
 
     String session;
     String id;
+    String mp;
 
     Menu menu;
+
+    OverviewTask currTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +89,7 @@ public class OverviewActivity extends Activity {
 
     public void setMPOption(String str) {
         menu.findItem(R.id.mp).setTitle(str);
-    }
-
-    public String getMPOption() {
-        return menu.findItem(R.id.mp).getTitle().toString();
+        mp = str;
     }
 
     @Override
@@ -125,7 +125,7 @@ public class OverviewActivity extends Activity {
         switch(item.getItemId()) {
             //if the refresh option was selected
             case R.id.refresh:
-                refresh();
+                refreshWithoutCache();
                 return true;
             case R.id.mp:
                 //cycle through the 4 marking periods
@@ -137,14 +137,22 @@ public class OverviewActivity extends Activity {
     }
 
     public void refresh() {
+        //cancel the previous task, in case if it is still running
+        if(currTask != null) currTask.cancel(true);
+
         //remove all the cards
         RecyclerView recList = (RecyclerView) findViewById(R.id.recycler_view);
         ((OverviewAdapter) recList.getAdapter()).clearData();
-        //delete the cache, so the data must be redownloaded
-        OverviewCache.deleteData(this);
         //download the data
         OverviewTask ot = new OverviewTask(this);
-        ot.execute(session, id, getMPOption());
+        ot.execute(session, id, mp);
+        currTask = ot;
+    }
+
+    public void refreshWithoutCache() {
+        //delete the cache, so the data must be redownloaded
+        OverviewCache.deleteData(this, mp);
+        refresh();
     }
 
     @Override

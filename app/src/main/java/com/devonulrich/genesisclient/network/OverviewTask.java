@@ -33,9 +33,9 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
         else mp = GenesisHTTP.markingPeriod(session, id);
 
         ArrayList<SchoolClass> classData;
-        if(OverviewCache.exists(activity)) {
+        if(OverviewCache.exists(activity, mp)) {
             //if the class data is cached, then load the saved data
-            classData = OverviewCache.readData(activity);
+            classData = OverviewCache.readData(activity, mp);
 
             Log.i(LOG_TAG, "Loaded overview data from cache");
         } else {
@@ -48,7 +48,7 @@ public class OverviewTask extends AsyncTask<String, Void, ArrayList<SchoolClass>
             addData(classData, classGrades);
 
             //save the downloaded info
-            OverviewCache.writeData(activity, classData);
+            OverviewCache.writeData(activity, mp, classData);
 
             Log.i(LOG_TAG, "Downloaded overview data from internet");
         }

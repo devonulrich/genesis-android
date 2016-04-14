@@ -18,9 +18,9 @@ public class OverviewCache {
     private static final long MAX_TIME = 60000;
 
     //saves the list of class info into the cache
-    public static void writeData(Context c, ArrayList<SchoolClass> data) {
+    public static void writeData(Context c, String mp, ArrayList<SchoolClass> data) {
         try {
-            File f = new File(c.getCacheDir(), FILE_NAME);
+            File f = new File(c.getCacheDir(), FILE_NAME + mp);
             FileWriter fw = new FileWriter(f);
             fw.append(String.valueOf(System.currentTimeMillis()));
             fw.append("\n");
@@ -35,8 +35,8 @@ public class OverviewCache {
     }
 
     //returns true if there is a suitable cache, and false if there isn't
-    public static boolean exists(Context c) {
-        File f = new File(c.getCacheDir(), FILE_NAME);
+    public static boolean exists(Context c, String mp) {
+        File f = new File(c.getCacheDir(), FILE_NAME + mp);
         if(!f.exists()) return false;
 
         try {
@@ -53,10 +53,10 @@ public class OverviewCache {
     }
 
     //reads and returns data from the cache (or null if there is no suitable cache)
-    public static ArrayList<SchoolClass> readData(Context c) {
-        File f = new File(c.getCacheDir(), FILE_NAME);
+    public static ArrayList<SchoolClass> readData(Context c, String mp) {
+        File f = new File(c.getCacheDir(), FILE_NAME + mp);
         //if there is no suitable file, then return null
-        if(!exists(c)) return null;
+        if(!f.exists()) return null;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -76,8 +76,8 @@ public class OverviewCache {
         }
     }
 
-    public static boolean deleteData(Context c) {
-        File f = new File(c.getCacheDir(), FILE_NAME);
+    public static boolean deleteData(Context c, String mp) {
+        File f = new File(c.getCacheDir(), FILE_NAME + mp);
         return f.delete();
     }
 }
