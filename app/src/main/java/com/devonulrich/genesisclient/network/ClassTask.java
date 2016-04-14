@@ -30,17 +30,18 @@ public class ClassTask extends AsyncTask<String, Void, ArrayList<ClassAssignment
         String session = params[0];
         String id = params[1];
         String classID = params[2];
+        String mp = params[3];
 
-        if(ClassCache.exists(activity, classID)) {
+        if(ClassCache.exists(activity, classID, mp)) {
             //if there is a cache, then read and use it
             Log.i(LOG_TAG, "Loaded class (" + classID + ") info from cache");
-            return ClassCache.readData(activity, classID);
+            return ClassCache.readData(activity, classID, mp);
         } else {
             //if there is no cache, then download new data
-            ArrayList<ClassAssignment> arr = GenesisHTTP.classPage(session, id, classID);
+            ArrayList<ClassAssignment> arr = GenesisHTTP.classPage(session, id, classID, mp);
             Log.i(LOG_TAG, "Downloaded class (" + classID + ") info from internet");
             //save the downloaded data for later
-            ClassCache.writeData(activity, classID, arr);
+            ClassCache.writeData(activity, classID, mp, arr);
             return arr;
         }
     }

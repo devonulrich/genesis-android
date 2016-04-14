@@ -19,11 +19,11 @@ public class ClassCache {
     private static final long MAX_TIME = 60000;
 
     //saves the list of assignments into the cache
-    public static void writeData(Context c, String classID, ArrayList<ClassAssignment> data) {
+    public static void writeData(Context c, String classID, String mp, ArrayList<ClassAssignment> data) {
         //make the class ID filename friendly
         classID = classID.replace("/", ":");
         try {
-            File f = new File(c.getCacheDir(), FILE_NAME + classID);
+            File f = new File(c.getCacheDir(), FILE_NAME + classID + mp);
             FileWriter fw = new FileWriter(f);
             fw.append(String.valueOf(System.currentTimeMillis()));
             fw.append("\n");
@@ -38,8 +38,8 @@ public class ClassCache {
     }
 
     //returns true if there is a suitable cache, and false if there isn't
-    public static boolean exists(Context c, String classID) {
-        File f = new File(c.getCacheDir(), FILE_NAME + classID);
+    public static boolean exists(Context c, String classID, String mp) {
+        File f = new File(c.getCacheDir(), FILE_NAME + classID + mp);
         if(!f.exists()) return false;
 
         try {
@@ -56,10 +56,10 @@ public class ClassCache {
     }
 
     //reads and returns data from the cache (or null if there is no suitable cache)
-    public static ArrayList<ClassAssignment> readData(Context c, String classID) {
-        File f = new File(c.getCacheDir(), FILE_NAME + classID);
+    public static ArrayList<ClassAssignment> readData(Context c, String classID, String mp) {
+        File f = new File(c.getCacheDir(), FILE_NAME + classID + mp);
         //if there is no suitable file, then return null
-        if(!exists(c, classID)) return null;
+        if(!f.exists()) return null;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));

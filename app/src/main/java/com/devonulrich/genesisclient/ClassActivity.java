@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -33,6 +32,7 @@ public class ClassActivity extends Activity {
         String grade = extras.getString(OverviewActivity.EXTRA_CLASS_GRADE);
         String room = extras.getString(OverviewActivity.EXTRA_CLASS_ROOM);
         String classID = extras.getString(OverviewActivity.EXTRA_CLASS_ID);
+        String mp = extras.getString(OverviewActivity.EXTRA_CLASS_MP);
 
         //put the data into the UI
         this.setTitle(className);
@@ -49,7 +49,7 @@ public class ClassActivity extends Activity {
             String session = ids[0];
             String id = ids[1];
             ClassTask ct = new ClassTask(this);
-            ct.execute(session, id, classID);
+            ct.execute(session, id, classID, mp);
         } else {
             //if no session ID was found, then go to the launcher activity
             Intent i = new Intent(this, LauncherActivity.class);

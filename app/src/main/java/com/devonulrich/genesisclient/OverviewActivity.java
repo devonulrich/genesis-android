@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,12 +13,10 @@ import android.widget.TextView;
 
 import com.devonulrich.genesisclient.data.cache.OverviewCache;
 import com.devonulrich.genesisclient.data.cache.SessionCache;
-import com.devonulrich.genesisclient.network.GenesisHTTP;
 import com.devonulrich.genesisclient.network.MPTask;
 import com.devonulrich.genesisclient.network.OverviewTask;
 
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class OverviewActivity extends Activity {
 
@@ -29,6 +26,7 @@ public class OverviewActivity extends Activity {
     public static final String EXTRA_CLASS_GRADE = "genesisclient.extra_class_grade";
     public static final String EXTRA_CLASS_ROOM = "genesisclient.extra_class_room";
     public static final String EXTRA_CLASS_ID = "genesisclient.extra_class_id";
+    public static final String EXTRA_CLASS_MP = "genesisclient.extra_class_mp";
 
     String session;
     String id;
@@ -162,6 +160,7 @@ public class OverviewActivity extends Activity {
         String room = ((TextView) view.findViewById(R.id.card_room)).getText().toString();
         String classID = ((TextView) view.findViewById(R.id.card_id)).getText().toString();
         classID = classID.replace('/', ':');//the slash in the class ID is replaced with a colon in
+        String mp = menu.findItem(R.id.mp).getTitle().toString();
         // the URL, so we must fix it for the URL to be correct
 
         //create a new intent, and put all of the necessary class info in
@@ -172,6 +171,7 @@ public class OverviewActivity extends Activity {
         i.putExtra(EXTRA_CLASS_GRADE, grade);
         i.putExtra(EXTRA_CLASS_ROOM, room);
         i.putExtra(EXTRA_CLASS_ID, classID);
+        i.putExtra(EXTRA_CLASS_MP, mp);
         startActivity(i);
     }
 }

@@ -35,6 +35,7 @@ public class GenesisHTTP {
             "https://parents.cresskillboe.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=";
     private static final String CLASS_PAGE_URL_2 = "&action=form&courseCode=";
     private static final String CLASS_PAGE_URL_3 = "&courseSection=";
+    private static final String CLASS_PAGE_URL_4 = "&mp=";
 
     //returns the session ID, or null if it failed
     public static String login(LoginInfo li) {
@@ -147,9 +148,10 @@ public class GenesisHTTP {
         }
     }
 
-    public static ArrayList<ClassAssignment> classPage(String session, String id, String classID) {
+    public static ArrayList<ClassAssignment> classPage(String session, String id, String classID, String mp) {
         String[] parts = classID.split(":");
-        String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + parts[0] + CLASS_PAGE_URL_3 + parts[1];
+        String fullURL = CLASS_PAGE_URL_1 + id + CLASS_PAGE_URL_2 + parts[0] + CLASS_PAGE_URL_3 + parts[1] +
+                CLASS_PAGE_URL_4 + mp;
         try {
             //get the page
             Connection page = Jsoup.connect(fullURL);
