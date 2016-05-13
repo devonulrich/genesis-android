@@ -1,10 +1,8 @@
 package com.devonulrich.genesisclient.network;
 
-import android.util.Log;
-
 import com.devonulrich.genesisclient.data.ClassAssignment;
 import com.devonulrich.genesisclient.data.SchoolClass;
-import com.devonulrich.genesisclient.data.login.LoginInfo;
+import com.devonulrich.genesisclient.data.LoginInfo;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -182,9 +180,9 @@ public class GenesisHTTP {
                 assignment.points = columns.get(14).text() + " / " + columns.get(16).text();
                 assignment.grade = columns.get(17).text();
 
-                for(int x = 0; x < columns.size(); x++) {
+                /*for(int x = 0; x < columns.size(); x++) {
                     Log.i(GenesisHTTP.class.getSimpleName(), x + ": " + columns.get(x).text());
-                }
+                }*/
 
                 //add the assignment info to the arraylist
                 data.add(assignment);

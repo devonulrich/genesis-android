@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.devonulrich.genesisclient.data.login.LoginInfo;
-import com.devonulrich.genesisclient.data.login.LoginStore;
+import com.devonulrich.genesisclient.background.StartAlarm;
+import com.devonulrich.genesisclient.data.LoginInfo;
+import com.devonulrich.genesisclient.data.files.LoginStore;
 import com.devonulrich.genesisclient.network.LoginTask;
 
 public class LauncherActivity extends Activity {
@@ -14,6 +15,9 @@ public class LauncherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
+        //make sure the alarm for grade updating is on
+        StartAlarm.startAlarm(this);
 
         //get the saved login credentials
         LoginInfo li = LoginStore.getLoginInfo(this);

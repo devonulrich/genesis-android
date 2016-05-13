@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.devonulrich.genesisclient.data.login.LoginInfo;
-import com.devonulrich.genesisclient.data.login.LoginStore;
+import com.devonulrich.genesisclient.data.LoginInfo;
+import com.devonulrich.genesisclient.data.files.LoginStore;
 import com.devonulrich.genesisclient.network.LoginTask;
 
 public class LoginActivity extends Activity {

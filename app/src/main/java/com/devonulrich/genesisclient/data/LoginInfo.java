@@ -1,4 +1,4 @@
-package com.devonulrich.genesisclient.data.login;
+package com.devonulrich.genesisclient.data;
 
 public class LoginInfo {
 

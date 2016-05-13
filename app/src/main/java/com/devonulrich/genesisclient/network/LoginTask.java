@@ -7,9 +7,8 @@ import android.os.AsyncTask;
 import com.devonulrich.genesisclient.LauncherActivity;
 import com.devonulrich.genesisclient.LoginActivity;
 import com.devonulrich.genesisclient.OverviewActivity;
-import com.devonulrich.genesisclient.R;
 import com.devonulrich.genesisclient.data.cache.SessionCache;
-import com.devonulrich.genesisclient.data.login.LoginInfo;
+import com.devonulrich.genesisclient.data.LoginInfo;
 
 public class LoginTask extends AsyncTask<LoginInfo, Void, String> {
 

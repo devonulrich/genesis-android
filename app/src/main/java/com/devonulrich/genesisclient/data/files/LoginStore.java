@@ -1,16 +1,18 @@
-package com.devonulrich.genesisclient.data.login;
+package com.devonulrich.genesisclient.data.files;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.devonulrich.genesisclient.data.LoginInfo;
+
 public class LoginStore {
 
-    private static String LOGIN_PREFS_NAME = "com.devonulrich.genesisclient.login";
+    private static final String LOGIN_PREFS_NAME = "com.devonulrich.genesisclient.login";
 
-    private static String AUTO_LOGIN_KEY = "l9XnDfTMfEXcMfqZ";
-    private static String EMAIL_KEY = "Bt3oeUxjc58qT5qJ";
-    private static String PASS_KEY = "mfaVB1yUcQVMvocS";
-    private static String ID_KEY = "rohfzQNVAP3u4cXq";
+    private static final String AUTO_LOGIN_KEY = "l9XnDfTMfEXcMfqZ";
+    private static final String EMAIL_KEY = "Bt3oeUxjc58qT5qJ";
+    private static final String PASS_KEY = "mfaVB1yUcQVMvocS";
+    private static final String ID_KEY = "rohfzQNVAP3u4cXq";
 
     public static LoginInfo getLoginInfo(Context c) {
         SharedPreferences sp = c.getSharedPreferences(LOGIN_PREFS_NAME, Context.MODE_PRIVATE);
