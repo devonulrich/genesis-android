@@ -79,7 +79,7 @@ public class AlarmTriggered extends BroadcastReceiver {
 
     public void makeNotification(Context context, String className) {
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setSmallIcon(R.drawable.ic_autorenew_white_24dp);
+        builder.setSmallIcon(R.drawable.ic_notification);
         builder.setContentTitle("New Assignment");
         builder.setContentText("There is a new assignment on genesis for " + className);
 
