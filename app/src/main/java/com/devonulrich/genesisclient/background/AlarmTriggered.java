@@ -82,6 +82,9 @@ public class AlarmTriggered extends BroadcastReceiver {
         builder.setSmallIcon(R.drawable.ic_notification);
         builder.setContentTitle("New Assignment");
         builder.setContentText("There is a new assignment on genesis for " + className);
+        builder.setPriority(Notification.PRIORITY_HIGH);
+        builder.setVibrate(new long[]{0, 300, 100, 300, 100, 100});
+        builder.setAutoCancel(true);
 
         Intent result = new Intent(context, OverviewActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
