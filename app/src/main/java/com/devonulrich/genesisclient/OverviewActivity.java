@@ -130,6 +130,12 @@ public class OverviewActivity extends Activity {
             case R.id.mp:
                 //cycle through the 4 marking periods
                 cycleMPOption();
+                return true;
+            case R.id.settings:
+                //go to the settings activity
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
             //if any other option was selected (should never happen)
             default:
                 return super.onOptionsItemSelected(item);

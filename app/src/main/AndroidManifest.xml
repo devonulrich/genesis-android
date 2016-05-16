@@ -31,13 +31,22 @@
             android:label="@string/class_title" />
 
         <receiver android:name=".background.AlarmTriggered" />
-
-        <receiver android:name=".background.StartAlarm"
+        <receiver
+            android:name=".background.StartAlarm"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".OverviewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.devonulrich.genesisclient.OverviewActivity" />
+        </activity>
     </application>
 
 </manifest>

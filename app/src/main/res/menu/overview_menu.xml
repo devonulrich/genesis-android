@@ -6,4 +6,8 @@
         android:icon="@drawable/ic_autorenew_white_24dp"
         android:title="@string/overview_refresh"
         android:showAsAction="always" />
+    <item android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings"
+        android:showAsAction="never" />
 </menu>
