@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="General" />
+
+    <Preference
+        android:key="storage_clear_storage"
+        android:title="Clear All Storage"
+        android:summary="Clears all saved files, including files for notifications, login information, and the cache"/>
+
+    <PreferenceCategory
+        android:title="Cache" />
+
+    <SwitchPreference
+        android:key="storage_cache"
+        android:title="Automatically Cache Files"
+        android:defaultValue="true" />
+
+    <Preference
+        android:key="storage_clear_cache"
+        android:title="Clear Cache"
+        android:summary="Clears temporary files that may take up space"/>
+</PreferenceScreen>
