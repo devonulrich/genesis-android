@@ -15,7 +15,7 @@ public class OverviewCache {
     private static final String FILE_NAME = "overview";
 
     //in milliseconds, how old the file can be to be usable at maximum
-    private static final long MAX_TIME = 60000;
+    private static final long MAX_TIME = 300000;
 
     //saves the list of class info into the cache
     public static void writeData(Context c, String mp, ArrayList<SchoolClass> data) {
@@ -43,8 +43,8 @@ public class OverviewCache {
             BufferedReader br = new BufferedReader(new FileReader(f));
             long time = Long.parseLong(br.readLine());
 
-            //return true if the cached file is less than 60 seconds old
-            // (if the current time is less than 60 seconds after the file was created)
+            //return true if the cached file is less than 300 seconds old
+            // (if the current time is less than 300 seconds after the file was created)
             return System.currentTimeMillis() < time + MAX_TIME;
         } catch(Exception e) {
             e.printStackTrace();
