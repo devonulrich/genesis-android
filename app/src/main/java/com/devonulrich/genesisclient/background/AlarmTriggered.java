@@ -13,6 +13,7 @@ import android.util.Log;
 import com.devonulrich.genesisclient.OverviewActivity;
 import com.devonulrich.genesisclient.R;
 import com.devonulrich.genesisclient.data.ClassAssignment;
+import com.devonulrich.genesisclient.data.cache.MPCache;
 import com.devonulrich.genesisclient.data.cache.SessionCache;
 import com.devonulrich.genesisclient.data.LoginInfo;
 import com.devonulrich.genesisclient.data.files.LoginStore;
@@ -56,7 +57,13 @@ public class AlarmTriggered extends BroadcastReceiver {
                 }
 
                 //get a list of classes with class ID's
-                String mp = GenesisHTTP.markingPeriod(sessID, studID);
+                String mp;
+                if(MPCache.exists(context)) {
+                    mp = MPCache.readData(context);
+                }  else {
+                    mp = GenesisHTTP.markingPeriod(sessID, studID);
+                    MPCache.writeData(context, mp);
+                }
                 HashMap<String, String> classes = GenesisHTTP.gradebook(sessID, studID, mp);
 
                 for(Map.Entry<String, String> es : classes.entrySet()) {

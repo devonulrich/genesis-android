@@ -1,5 +1,7 @@
 package com.devonulrich.genesisclient.network;
 
+import android.util.Log;
+
 import com.devonulrich.genesisclient.data.ClassAssignment;
 import com.devonulrich.genesisclient.data.SchoolClass;
 import com.devonulrich.genesisclient.data.LoginInfo;
@@ -117,6 +119,8 @@ public class GenesisHTTP {
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
             Connection.Response response = page.execute();
+            /*Log.d(GenesisHTTP.class.getSimpleName(),
+                "gb size: " + response.bodyAsBytes().length + "");*/
 
             //parse the document
             Document html = response.parse();
@@ -157,6 +161,8 @@ public class GenesisHTTP {
             page.followRedirects(true);
             page.cookie("JSESSIONID", session);
             Connection.Response response = page.execute();
+            /*Log.d(GenesisHTTP.class.getSimpleName(),
+                    "cp " + classID + " size: " + response.bodyAsBytes().length + "");*/
 
             //parse the document
             Document html = response.parse();
