@@ -28,6 +28,6 @@ public class StartAlarm extends BroadcastReceiver {
 
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
                 0,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES, alrmIntent);
+                AlarmManager.INTERVAL_HALF_HOUR, alrmIntent);
     }
 }
