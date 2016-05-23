@@ -48,13 +48,28 @@
 
     <!-- Notification Settings -->
     <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_notification_enabled_t">Enable Notifications</string>
+    <string name="pref_notification_enabled_s">Check Genesis in the background
+        for any new updates, and send a notification if there is one</string>
+    <string name="pref_notification_sync">Sync</string>
+    <string-array name="pref_notification_sync_times">
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+        <item>1 Day</item>
+    </string-array>
+    <string-array name="pref_notification_sync_vals">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string name="pref_notification_sync_freq_t">Sync Frequency</string>
+    <string name="pref_notification_sync_freq_s">How often the app
+        will check Genesis in the background</string>
+    <string name="pref_notification_no_wifi_t">Sync without WiFi</string>
+    <string name="pref_notification_no_wifi_s">Will update more often, but will
+        use up cellular data</string>
+    <string name="pref_notification_notification">Notification Settings</string>
+    <string name="pref_notification_vibrate">Vibrate</string>
 
     <!-- About App -->
     <string name="pref_header_about">About App</string>
