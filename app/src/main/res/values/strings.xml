@@ -36,6 +36,15 @@
 
     <!-- Storage settings -->
     <string name="pref_header_storage">Storage</string>
+    <string name="pref_storage_general">General</string>
+    <string name="pref_storage_clear_all_t">Clear All Storage</string>
+    <string name="pref_storage_clear_all_s">Clears all saved files, including
+        files for notifications, login information, and the cache</string>
+    <string name="pref_storage_cache">Cache</string>
+    <string name="pref_storage_auto_cache">Automatically Cache Files</string>
+    <string name="pref_storage_clear_cache_t">Clear Cache</string>
+    <string name="pref_storage_clear_cache_s">Clears temporary files that
+        may take up space</string>
 
     <!-- Notification Settings -->
     <string name="pref_header_notifications">Notifications</string>
