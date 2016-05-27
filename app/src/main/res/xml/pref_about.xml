@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="@string/pref_about_version"
+        android:summary="@string/app_version_number" />
+
+    <PreferenceCategory
+        android:title="@string/pref_about_license" />
+
+    <Preference
+        android:title="@string/pref_about_license_genesis_t"
+        android:summary="@string/pref_about_license_genesis_s"
+        android:key="license_genesis" />
+
+    <Preference
+        android:title="@string/pref_about_license_jsoup_t"
+        android:summary="@string/pref_about_license_jsoup_s"
+        android:key="license_jsoup" />
+
+</PreferenceScreen>

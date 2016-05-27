@@ -1,6 +1,7 @@
 <resources>
     <!--General App Strings-->
     <string name="app_name">Genesis Client</string>
+    <string name="app_version_number">1.0.0 Alpha</string>
 
     <!--LoginActivity Strings-->
     <string name="login_title">Login</string>
@@ -73,4 +74,13 @@
 
     <!-- About App -->
     <string name="pref_header_about">About App</string>
+    <string name="pref_about_version">Version Number</string>
+    <string name="pref_about_license">Copyright Information</string>
+    <string name="pref_about_license_genesis_t">Genesis App</string>
+    <string name="pref_about_license_genesis_s">Copyright &#169; 2016 by Devon Ulrich under the MIT
+        License</string>
+    <string name="pref_about_license_jsoup_t">JSoup</string>
+    <string name="pref_about_license_jsoup_s">Copyright &#169; 2009-2016 by Jonathan Hedley under
+        the MIT License</string>
+
 </resources>
