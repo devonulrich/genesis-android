@@ -101,9 +101,6 @@ public class SettingsActivity extends PreferenceActivity {
         setupActionBar();
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -116,9 +113,8 @@ public class SettingsActivity extends PreferenceActivity {
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
-                finish();
-            }
+            //go back to the previous activity if the back button is pressed
+            finish();
             return true;
         }
         return super.onMenuItemSelected(featureId, item);
@@ -138,6 +134,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target) {
+        //builds the settings categories list
         loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
@@ -146,6 +143,7 @@ public class SettingsActivity extends PreferenceActivity {
      * Make sure to deny any unknown fragments here.
      */
     protected boolean isValidFragment(String fragmentName) {
+        //always add new preference fragments to this list
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || StoragePreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
@@ -153,7 +151,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     /**
-     * This fragment shows general preferences only. It is used when the
+     * This fragment shows storage preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -169,6 +167,7 @@ public class SettingsActivity extends PreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
+                //go back when the back button is pressed
                 getActivity().finish();
                 return true;
             }
@@ -200,6 +199,7 @@ public class SettingsActivity extends PreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
+                //go back
                 getActivity().finish();
                 return true;
             }
@@ -224,6 +224,7 @@ public class SettingsActivity extends PreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
+                //go back
                 getActivity().finish();
                 return true;
             }
