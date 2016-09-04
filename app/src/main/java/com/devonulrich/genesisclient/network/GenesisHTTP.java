@@ -129,14 +129,9 @@ public class GenesisHTTP {
             HashMap<String, String> classGrades = new HashMap<>();
             for (Element classRow : html.select("tr.listrowodd, tr.listroweven")) {
                 //cycle through all table rows (which contain class information and grades)
-                //get the class name by getting the list of table data, selecting the first one,
-                //getting the text, and getting the part after the ' - '
-                //the last part is necessary so the class name matches the class name from the
-                //overview page, otherwise it would have the class ID number in front of it
-                //ex: "1000/2 - English I Honors"
-                String className = classRow.getElementsByTag("td").get(0).text().split(" - ")[1];
+                String className = classRow.getElementsByTag("td").get(0).text();
                 //save the class id for later use
-                String classID = classRow.getElementsByTag("td").get(0).text().split(" - ")[0];
+                String classID = classRow.getElementsByTag("td").get(0).html().split("'")[3];
                 //get the class grade, which is the 3rd column in
                 String classGrade = classRow.getElementsByTag("td").get(2).text();
                 //add the class name and grade to the hashmap
