@@ -175,15 +175,15 @@ public class GenesisHTTP {
                 // (to avoid errors)
                 if (columns.size() <= 17) continue;
                 assignment.date = columns.get(1).text();
-                String[] categoryStrs = columns.get(5).text().split("\\s+");
+                String[] categoryStrs = columns.get(4).text().split("\\s+");
                 assignment.category = categoryStrs[categoryStrs.length - 1];
-                assignment.name = columns.get(7).text();
-                assignment.points = columns.get(14).text() + " / " + columns.get(16).text();
-                assignment.grade = columns.get(17).text();
+                assignment.name = columns.get(6).text();
+                assignment.points = columns.get(13).text() + " / " + columns.get(15).text();
+                assignment.grade = columns.get(16).text();
 
-                /*for(int x = 0; x < columns.size(); x++) {
+                for(int x = 0; x < columns.size(); x++) {
                     Log.i(GenesisHTTP.class.getSimpleName(), x + ": " + columns.get(x).text());
-                }*/
+                }
 
                 //add the assignment info to the arraylist
                 data.add(assignment);
