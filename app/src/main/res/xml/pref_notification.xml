@@ -16,7 +16,7 @@
         android:dependency="notifications_enabled"
         android:entries="@array/pref_notification_sync_times"
         android:entryValues="@array/pref_notification_sync_vals"
-        android:defaultValue="1"
+        android:defaultValue="3600000"
         android:title="@string/pref_notification_sync_freq_t"
         android:summary="@string/pref_notification_sync_freq_s"/>
 

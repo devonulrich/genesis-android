@@ -54,14 +54,18 @@
         for any new updates, and send a notification if there is one</string>
     <string name="pref_notification_sync">Sync</string>
     <string-array name="pref_notification_sync_times">
+        <item>15 Minutes</item>
         <item>30 Minutes</item>
         <item>1 Hour</item>
+        <item>12 Hours</item>
         <item>1 Day</item>
     </string-array>
     <string-array name="pref_notification_sync_vals">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>43200000</item>
+        <item>86400000</item>
     </string-array>
     <string name="pref_notification_sync_freq_t">Sync Frequency</string>
     <string name="pref_notification_sync_freq_s">How often the app

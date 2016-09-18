@@ -181,9 +181,9 @@ public class GenesisHTTP {
                 assignment.points = columns.get(13).text() + " / " + columns.get(15).text();
                 assignment.grade = columns.get(16).text();
 
-                for(int x = 0; x < columns.size(); x++) {
+                /*for(int x = 0; x < columns.size(); x++) {
                     Log.i(GenesisHTTP.class.getSimpleName(), x + ": " + columns.get(x).text());
-                }
+                }*/
 
                 //add the assignment info to the arraylist
                 data.add(assignment);
