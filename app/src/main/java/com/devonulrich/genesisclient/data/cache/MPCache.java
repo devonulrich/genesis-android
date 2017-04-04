@@ -1,6 +1,7 @@
 package com.devonulrich.genesisclient.data.cache;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,6 +37,10 @@ public class MPCache {
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             long time = Long.parseLong(br.readLine());
+
+            //prevents a corrupt cache from being used
+            String mp = br.readLine();
+            if(mp.equals("null")) return false;
 
             //return true if the cached file is less than 1 day old
             // (if the current time is less than 1 day after the file was created)
