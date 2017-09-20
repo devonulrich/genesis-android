@@ -74,16 +74,16 @@ public class AlarmTriggered extends BroadcastReceiver {
                     classID = classID.replace('/', ':');
                     ArrayList<ClassAssignment> arr =
                             GenesisHTTP.classPage(sessID, studID, classID, mp);
-                    if(arr.size() > NotificationStore.getNotificationInfo(context, classID)) {
+                    if(arr != null && arr.size() > NotificationStore.getNotificationInfo(context, classID)) {
                         //there is a new assignment that has not been previously counted
                         //notify the user!
                         makeNotification(context, es.getKey(), arr.get(0).name);
                         Log.d(AlarmTriggered.class.getSimpleName(),
                                 "new assignment - creating notification");
-                    }
 
-                    //record the new amount, in case if it's new or there isn't an older one
-                    NotificationStore.setNotificationInfo(context, classID, arr.size());
+                        //record the new amount, in case if it's new or there isn't an older one
+                        NotificationStore.setNotificationInfo(context, classID, arr.size());
+                    }
                 }
             }
         }).start();

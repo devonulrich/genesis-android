@@ -173,13 +173,21 @@ public class GenesisHTTP {
                 Elements columns = assignmentRow.getElementsByTag("td");
                 // if it doesn't have all of the information we need, then skip it
                 // (to avoid errors)
-                if (columns.size() <= 17) continue;
+                Log.d("TEST", columns.toString());
+                if (columns.size() <= 15) continue;
                 assignment.date = columns.get(1).text();
-                String[] categoryStrs = columns.get(4).text().split("\\s+");
+                String[] categoryStrs = columns.get(3).text().split("\\s+");
                 assignment.category = categoryStrs[categoryStrs.length - 1];
                 assignment.name = columns.get(6).text();
-                assignment.points = columns.get(13).text() + " / " + columns.get(15).text();
-                assignment.grade = columns.get(16).text();
+
+                String[] gradeStrs = columns.get(12).text().split("\\s+");
+                for(int text = 0; text < gradeStrs.length; text++) {
+                    if(text < gradeStrs.length - 1) {
+                        assignment.points += gradeStrs[text];
+                    } else {
+                        assignment.grade = gradeStrs[text];
+                    }
+                }
 
                 /*for(int x = 0; x < columns.size(); x++) {
                     Log.i(GenesisHTTP.class.getSimpleName(), x + ": " + columns.get(x).text());
