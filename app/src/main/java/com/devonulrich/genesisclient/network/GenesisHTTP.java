@@ -178,7 +178,7 @@ public class GenesisHTTP {
                 assignment.date = columns.get(1).text();
                 String[] categoryStrs = columns.get(3).text().split("\\s+");
                 assignment.category = categoryStrs[categoryStrs.length - 1];
-                assignment.name = columns.get(6).text();
+                assignment.name = columns.get(8).getElementsByTag("b").get(0).text();
 
                 String[] gradeStrs = columns.get(12).text().split("\\s+");
                 for(int text = 0; text < gradeStrs.length; text++) {
